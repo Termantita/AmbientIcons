@@ -43,13 +43,20 @@ class $modify(PlayLayer) {
 			//log::info("rgb_picker({}, {}, {})", color.r, color.g, color.b);
 
 			auto player = PlayLayer::get()->m_player1;
+			auto player2 = PlayLayer::get()->m_player2;
 
-			if (Mod::get()->getSettingValue<bool>("change-1st-color"))
+			if (Mod::get()->getSettingValue<bool>("change-main-color"))
 				player->setColor(color);
 			
-			if (Mod::get()->getSettingValue<bool>("change-2nd-color"))
+			if (Mod::get()->getSettingValue<bool>("change-secondary-color"))
 				player->setSecondColor(color);
-
+			
+			if (Mod::get()->getSettingValue<bool>("change-main-color-dual"))
+				player2->setColor(color);
+			
+			if (Mod::get()->getSettingValue<bool>("change-secondary-color-dual"))
+				player2->setSecondColor(color);
+			
 			waitFor = TIME;
 		}
 		waitFor--;
