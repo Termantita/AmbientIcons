@@ -40,7 +40,7 @@ class $modify(PlayLayer) {
 			auto color = ccColor3B(data[0], data[1], data[2]);
 			delete img;
 
-			log::info("rgb_picker({}, {}, {})", color.r, color.g, color.b);
+			//log::info("rgb_picker({}, {}, {})", color.r, color.g, color.b);
 
 			auto player = PlayLayer::get()->m_player1;
 
