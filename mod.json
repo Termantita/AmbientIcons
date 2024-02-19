@@ -10,14 +10,13 @@
 	"settings": {
 		"change-1st-color": {
 			"name": "Change main color",
-			"description": "Makes main color go <cp>Ambient</c>",
+			"description": "Makes main color go <cp>ambient</c>",
 			"type": "bool",
 			"default": true
 		},
-		
 		"change-2nd-color": {
 			"name": "Change secondary color",
-			"description": "Makes secondary color go <cp>Ambient</c>",
+			"description": "Makes secondary color go <cp>ambient</c>",
 			"type": "bool",
 			"default": false
 		}
