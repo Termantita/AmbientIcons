@@ -29,7 +29,7 @@ class $modify(PlayLayer) {
 			
 			auto renderTexture = CCRenderTexture::create(static_cast<int>(size.width / 5), static_cast<int>(size.height / 2));
 			
-			renderTexture->beginWithClear(105, 12, 13, 100);
+			renderTexture->begin();
 			CCDirector::sharedDirector()->getRunningScene()->visit();
 			renderTexture->end();
 
