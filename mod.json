@@ -5,19 +5,19 @@
 	"id": "terma.ambienticons",
 	"name": "AmbientIcons",
 	"developer": "Terma",
-	"description": "The color of the icons syncs with the color of your screen!",
+	"description": "The color of the icons syncs with the color of the level you are playing!",
 	"tags": ["ambient", "icons", "color", "icons color", "PlayLayer"],
 	"settings": {
 		"change-1st-color": {
-			"name": "Change <cy>main</cy> color",
-			"description": "Makes main color go <cp>ambient</cp>",
+			"name": "Change main color",
+			"description": "Makes main color go <cp>Ambient</c>",
 			"type": "bool",
 			"default": true
 		},
 		
 		"change-2nd-color": {
-			"name": "Change <cy>secondary</cy> color",
-			"description": "Makes secondary color go <cp>ambient</cp>",
+			"name": "Change secondary color",
+			"description": "Makes secondary color go <cp>Ambient</c>",
 			"type": "bool",
 			"default": false
 		}
