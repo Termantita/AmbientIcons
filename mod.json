@@ -1,9 +1,9 @@
 {
 	"geode": "2.0.0-beta.20",
 	"gd": "2.204",
-	"version": "v1.1.1",
+	"version": "v1.2.0",
 	"id": "terma.ambienticons",
-	"name": "AmbientIcons",
+	"name": "Ambient Icons",
 	"developer": "Terma",
 	"description": "The color of the icons syncs with the color of the level you are playing!",
 	"tags": ["ambient", "icons", "color", "icons color", "PlayLayer", "player", "misc"],
@@ -31,6 +31,14 @@
 			"description": "Makes dual secondary color go <cp>ambient</c>",
 			"type": "bool",
 			"default": false
+		},
+		"update-time": {
+			"name": "Update time (ms)",
+			"description": "Less time = more smooth color change but less performance",
+			"type": "int",
+			"default": 800,
+			"min": 0,
+			"max": 3000
 		}
 	}
 }
