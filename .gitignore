@@ -57,3 +57,6 @@ build-*/
 # Art
 logo.pdn
 new-logo.pdn
+
+# Actions
+actions/
