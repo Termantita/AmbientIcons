@@ -4,7 +4,7 @@ Changes the color of the icons based on the current color of the level (like <cr
 
 <cr>(This mod **may affect performance slightly**, try adjusting update time in mod's settings if this happens)</c>
 
-Only works on **PlayLayer**!
+Now working on **PlayLayer** and **LevelEditorLayer**!
 
 ## Features
 
