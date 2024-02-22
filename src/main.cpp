@@ -2,7 +2,7 @@
 
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/PlayerObject.hpp>
-#include <Geode/modify/GJBaseGameLayer.hpp>
+#include <Geode/modify/LevelEditorLayer.hpp>
 
 #include <Geode/loader/SettingEvent.hpp>
 
@@ -13,9 +13,9 @@ using namespace geode::prelude;
 int globalInterval = Mod::get()->getSettingValue<int64_t>("update-time");
 
 $execute {
-    listenForSettingChanges("update-time", +[](int64_t value) {
-			globalInterval = value;
-    });
+  listenForSettingChanges("update-time", +[](int64_t value) {
+		globalInterval = value;
+  });
 }
 
 ccColor3B getScreenColor() {
@@ -37,9 +37,17 @@ ccColor3B getScreenColor() {
   return color;
 }
 
-void changeColor(ccColor3B color) {
-  auto player = PlayLayer::get()->m_player1;
-  auto player2 = PlayLayer::get()->m_player2;
+void changeColor(ccColor3B color, bool onLevelEditorLayer = false) {
+  PlayerObject* player;
+  PlayerObject* player2;
+  
+  if (!onLevelEditorLayer) {
+    player = PlayLayer::get()->m_player1;
+    player2 = PlayLayer::get()->m_player2;
+  } else {
+    player = LevelEditorLayer::get()->m_player1;
+    player2 = LevelEditorLayer::get()->m_player2;
+  }
   
   if (Mod::get()->getSettingValue<bool>("change-main-color"))
     player->setColor(color);
@@ -85,10 +93,34 @@ class $modify(PlayLayer) {
     }
 
     executeCode = !executeCode;
-    
 	}
 };
 
+class $modify(LevelEditorLayer) {
+  void postUpdate(float p0) {
+    LevelEditorLayer::postUpdate(p0);
+
+    static bool executeCode = true;
+    ccColor3B color;
+    
+		static auto lastExecutionTime = std::chrono::steady_clock::now();
+		
+    std::chrono::milliseconds interval(globalInterval);
+    
+    auto currentTime = std::chrono::steady_clock::now();
+    auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
+
+    if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
+			changeColor(getScreenColor(), true);
+      lastExecutionTime = currentTime;
+
+			if (globalFirstTime)
+				globalFirstTime = false;
+    }
+
+    executeCode = !executeCode;
+  }
+};
 
 class $modify(PlayerObject) {
   void flashPlayer(float p0, float p1, ccColor3B mainColor, ccColor3B secondColor) {
