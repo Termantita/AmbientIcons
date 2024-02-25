@@ -18,21 +18,29 @@ $execute {
   });
 }
 
-ccColor3B getScreenColor() {
-  auto size = CCDirector::sharedDirector()->getWinSize();
-            
-  auto renderTexture = CCRenderTexture::create(static_cast<int>(size.width / 2), static_cast<int>(size.height / 2));
+ccColor3B getScreenColor(PlayLayer* layer) {
+  auto size = CCDirector::sharedDirector()->getWinSize() / 2;
+  
+  auto container = CCNode::create();
+  layer->addChild(container);
 
+  auto renderTexture = CCRenderTexture::create(5, 5);
+  layer->addChild(renderTexture);
+  renderTexture->setPosition(size / 2);
 
   renderTexture->begin();
-  CCDirector::sharedDirector()->getRunningScene()->visit();
+  // CCDirector::sharedDirector()->getRunningScene()->visit();
+  layer->visit();
   renderTexture->end();
 
   auto img = renderTexture->newCCImage();
   auto data = img->getData();
-  auto color = ccColor3B(data[0], data[1], data[2]);
+  ccColor3B color = ccColor3B(data[0], data[1], data[2]);
   
+  log::info("rgb({}, {}, {})", color.r, color.g, color.b);
+
   delete img;
+  renderTexture->removeMeAndCleanup();
 
   return color;
 }
@@ -48,7 +56,7 @@ void changeColor(ccColor3B color, bool onLevelEditorLayer = false) {
     player = LevelEditorLayer::get()->m_player1;
     player2 = LevelEditorLayer::get()->m_player2;
   }
-  
+
   if (Mod::get()->getSettingValue<bool>("change-main-color"))
     player->setColor(color);
 
@@ -60,6 +68,23 @@ void changeColor(ccColor3B color, bool onLevelEditorLayer = false) {
 
   if (Mod::get()->getSettingValue<bool>("change-secondary-color-dual"))
     player2->setSecondColor(color);
+
+  if (Mod::get()->getSettingValue<bool>("change-wave-trail")) {
+    if (player->m_isDart) {
+      player->m_waveTrail->setColor(color);
+    }
+    if (player2->m_isDart) {
+      player2->m_waveTrail->setColor(color);
+    }
+  }
+
+  if (Mod::get()->getSettingValue<bool>("change-glow-color")) {
+    player->m_glowColor = color;
+    player->updateGlowColor();
+
+    player2->m_glowColor = color;
+    player2->updateGlowColor();
+  }
 
 	return;
 }
@@ -85,7 +110,7 @@ class $modify(PlayLayer) {
     auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
 
     if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
-			changeColor(getScreenColor());
+			changeColor(getScreenColor(this));
       lastExecutionTime = currentTime;
 
 			if (globalFirstTime)
@@ -111,7 +136,7 @@ class $modify(LevelEditorLayer) {
     auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
 
     if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
-			changeColor(getScreenColor(), true);
+			//changeColor(getScreenColor(), true);
       lastExecutionTime = currentTime;
 
 			if (globalFirstTime)

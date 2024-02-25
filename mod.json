@@ -1,12 +1,12 @@
 {
 	"geode": "2.0.0-beta.20",
 	"gd": "2.204",
-	"version": "v1.3.0",
+	"version": "v1.3.1",
 	"id": "terma.ambienticons",
 	"name": "Ambient Icons",
 	"developer": "Terma",
 	"description": "The color of the icons syncs with the color of the level you are playing!",
-	"tags": ["ambient", "icons", "color", "icons color", "PlayLayer", "player", "misc"],
+	"tags": ["color", "player", "misc"],
 	"settings": {
 		"change-main-color": {
 			"name": "Change main color",
@@ -32,6 +32,18 @@
 			"type": "bool",
 			"default": false
 		},
+		"change-wave-trail": {
+			"name": "Change wave trail color",
+			"description": "Makes wave trail color go <cp>ambient</c> (having ambient glow active makes this option useless)",
+			"type": "bool",
+			"default": true
+		},
+		"change-glow-color": {
+			"name": "Change glow color",
+			"description": "Makes glow color go <cp>ambient</c>",
+			"type": "bool",
+			"default": false
+		},
 		"update-time": {
 			"name": "Update time (ms)",
 			"description": "Less time = more smooth color change but less performance",
@@ -42,7 +54,7 @@
 		},
 		"player-flash": {
 			"name": "Show Player Flash",
-			"description": "Show player flashes in dash orbs, spider orbs, teleports and spider dashes (if enabled, if activated it may cause update bugs)",
+			"description": "Show player flashes in dash orbs, spider orbs, teleports and spider dashes (it may cause update color bugs when is enabled)",
 			"type": "bool",
 			"default": false
 		}
