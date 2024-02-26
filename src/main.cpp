@@ -6,11 +6,10 @@
 
 #include <Geode/loader/SettingEvent.hpp>
 
-#include <thread>
-
 using namespace geode::prelude;
 
 int globalInterval = Mod::get()->getSettingValue<int64_t>("update-time");
+float globalXPos = Mod::get()->getSettingValue<double>("render-x-pos");
 
 $execute {
   listenForSettingChanges("update-time", +[](int64_t value) {
@@ -18,26 +17,30 @@ $execute {
   });
 }
 
-ccColor3B getScreenColor(PlayLayer* layer) {
-  auto size = CCDirector::sharedDirector()->getWinSize() / 2;
-  
-  auto container = CCNode::create();
-  layer->addChild(container);
+$execute {
+  listenForSettingChanges("render-x-pos", +[](double value) {
+		globalXPos = value;
+  });
+}
 
-  auto renderTexture = CCRenderTexture::create(5, 5);
-  layer->addChild(renderTexture);
-  renderTexture->setPosition(size / 2);
+ccColor3B getScreenColor() {
+  auto size = CCDirector::sharedDirector()->getWinSize();
+
+  auto renderTexture = CCRenderTexture::create(1, 1);
+  auto layer = PlayLayer::get();
+  auto oldPos = layer->getPosition();
+  
+  layer->setPosition({size.width * globalXPos, -size.height / 2});
 
   renderTexture->begin();
-  // CCDirector::sharedDirector()->getRunningScene()->visit();
   layer->visit();
   renderTexture->end();
+
+  layer->setPosition(oldPos);
 
   auto img = renderTexture->newCCImage();
   auto data = img->getData();
   ccColor3B color = ccColor3B(data[0], data[1], data[2]);
-  
-  log::info("rgb({}, {}, {})", color.r, color.g, color.b);
 
   delete img;
   renderTexture->removeMeAndCleanup();
@@ -91,6 +94,19 @@ void changeColor(ccColor3B color, bool onLevelEditorLayer = false) {
 
 bool globalFirstTime = true;
 class $modify(PlayLayer) {
+  bool init(GJGameLevel* p0, bool p1, bool p2) {
+    if (!PlayLayer::init(p0, p1, p2))
+      return false;
+
+    auto container = GameObject::create();
+    container->setPosition(CCDirector::sharedDirector()->getWinSize() / 2);
+    container->setID("frame-container"_spr);
+
+    this->addChild(container);
+    
+    return true;
+  }
+
   void onExit() {
     globalFirstTime = true;
     PlayLayer::onExit();
@@ -110,7 +126,7 @@ class $modify(PlayLayer) {
     auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
 
     if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
-			changeColor(getScreenColor(this));
+			changeColor(getScreenColor());
       lastExecutionTime = currentTime;
 
 			if (globalFirstTime)
@@ -136,7 +152,7 @@ class $modify(LevelEditorLayer) {
     auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
 
     if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
-			//changeColor(getScreenColor(), true);
+			changeColor(getScreenColor(), true);
       lastExecutionTime = currentTime;
 
 			if (globalFirstTime)

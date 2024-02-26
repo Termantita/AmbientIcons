@@ -6,7 +6,7 @@
 	"name": "Ambient Icons",
 	"developer": "Terma",
 	"description": "The color of the icons syncs with the color of the level you are playing!",
-	"tags": ["color", "player", "misc"],
+	"tags": ["player"],
 	"settings": {
 		"change-main-color": {
 			"name": "Change main color",
@@ -43,6 +43,19 @@
 			"description": "Makes glow color go <cp>ambient</c>",
 			"type": "bool",
 			"default": false
+		},
+		"render-x-pos": {
+			"name": "Set X",
+			"description": "Set where in the x axis take the colors",
+			"type": "float",
+			"default": 0,
+			"min": 0,
+			"max": 1,
+			"control": {
+				"slider-step": 0.1,
+				"slider": true,
+				"arrows": false
+			}
 		},
 		"update-time": {
 			"name": "Update time (ms)",
