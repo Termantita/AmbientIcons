@@ -9,7 +9,9 @@
 using namespace geode::prelude;
 
 int globalInterval = Mod::get()->getSettingValue<int64_t>("update-time");
+
 float globalXPos = Mod::get()->getSettingValue<double>("render-x-pos");
+float globalYPos = Mod::get()->getSettingValue<double>("render-y-pos");
 
 $execute {
   listenForSettingChanges("update-time", +[](int64_t value) {
@@ -23,14 +25,26 @@ $execute {
   });
 }
 
-ccColor3B getScreenColor() {
+$execute {
+  listenForSettingChanges("render-y-pos", +[](double value) {
+		globalYPos = value;
+  });
+}
+
+
+ccColor3B getScreenColor(bool onLevelEditorLayer = false) {
   auto size = CCDirector::sharedDirector()->getWinSize();
 
   auto renderTexture = CCRenderTexture::create(1, 1);
-  auto layer = PlayLayer::get();
+  CCLayer* layer;
+  if (!onLevelEditorLayer)
+    layer = PlayLayer::get();
+  else 
+    layer = LevelEditorLayer::get();
+  
   auto oldPos = layer->getPosition();
   
-  layer->setPosition({size.width * globalXPos, -size.height / 2});
+  layer->setPosition({-size.width * globalXPos, -size.height * globalYPos});
 
   renderTexture->begin();
   layer->visit();
@@ -92,21 +106,13 @@ void changeColor(ccColor3B color, bool onLevelEditorLayer = false) {
 	return;
 }
 
+void getScreenColorAndChange(bool onLevelEditorLayer = false) {
+  auto color = getScreenColor(onLevelEditorLayer);
+  changeColor(color, onLevelEditorLayer);
+}
+
 bool globalFirstTime = true;
 class $modify(PlayLayer) {
-  bool init(GJGameLevel* p0, bool p1, bool p2) {
-    if (!PlayLayer::init(p0, p1, p2))
-      return false;
-
-    auto container = GameObject::create();
-    container->setPosition(CCDirector::sharedDirector()->getWinSize() / 2);
-    container->setID("frame-container"_spr);
-
-    this->addChild(container);
-    
-    return true;
-  }
-
   void onExit() {
     globalFirstTime = true;
     PlayLayer::onExit();
@@ -116,17 +122,18 @@ class $modify(PlayLayer) {
     PlayLayer::postUpdate(p0);
 
     static bool executeCode = true;
-    ccColor3B color;
     
-		static auto lastExecutionTime = std::chrono::steady_clock::now();
 		
     std::chrono::milliseconds interval(globalInterval);
     
     auto currentTime = std::chrono::steady_clock::now();
+		
+    static auto lastExecutionTime = currentTime;
+    
     auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
 
     if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
-			changeColor(getScreenColor());
+			getScreenColorAndChange();
       lastExecutionTime = currentTime;
 
 			if (globalFirstTime)
@@ -142,17 +149,18 @@ class $modify(LevelEditorLayer) {
     LevelEditorLayer::postUpdate(p0);
 
     static bool executeCode = true;
-    ccColor3B color;
     
-		static auto lastExecutionTime = std::chrono::steady_clock::now();
 		
     std::chrono::milliseconds interval(globalInterval);
     
     auto currentTime = std::chrono::steady_clock::now();
+    
+    static auto lastExecutionTime = currentTime;
+		
     auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
 
     if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
-			changeColor(getScreenColor(), true);
+			getScreenColorAndChange(true);
       lastExecutionTime = currentTime;
 
 			if (globalFirstTime)

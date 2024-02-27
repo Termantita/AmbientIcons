@@ -1,5 +1,5 @@
 {
-	"geode": "2.0.0-beta.20",
+	"geode": "2.0.0-beta.21",
 	"gd": "2.204",
 	"version": "v1.3.1",
 	"id": "terma.ambienticons",
@@ -46,7 +46,7 @@
 		},
 		"render-x-pos": {
 			"name": "Set X",
-			"description": "Set where in the x axis take the colors",
+			"description": "Set where in the X axis take the colors",
 			"type": "float",
 			"default": 0,
 			"min": 0,
@@ -57,17 +57,30 @@
 				"arrows": false
 			}
 		},
+		"render-y-pos": {
+			"name": "Set Y",
+			"description": "Set where in the Y axis take the colors",
+			"type": "float",
+			"default": 0.5,
+			"min": 0,
+			"max": 1,
+			"control": {
+				"slider-step": 0.1,
+				"slider": true,
+				"arrows": false
+			}
+		},
 		"update-time": {
 			"name": "Update time (ms)",
-			"description": "Less time = more smooth color change but less performance",
+			"description": "Increase the value if there are too many flashing colors (after v1.3.1 fps issues should no longer exist)",
 			"type": "int",
-			"default": 800,
+			"default": 0,
 			"min": 0,
-			"max": 3000
+			"max": 1000
 		},
 		"player-flash": {
 			"name": "Show Player Flash",
-			"description": "Show player flashes in dash orbs, spider orbs, teleports and spider dashes (it may cause update color bugs when is enabled)",
+			"description": "Show player flashes in dash orbs, spider orbs, teleports and spider dashes (it may cause update color bugs when is enabled without 0ms update time)",
 			"type": "bool",
 			"default": false
 		}
