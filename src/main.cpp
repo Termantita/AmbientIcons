@@ -31,8 +31,23 @@ $execute {
   });
 }
 
+bool modSettingsDisabled() {
+  auto mod = Mod::get();
+
+  auto mColor = mod->getSettingValue<bool>("change-main-color");
+  auto sColor = mod->getSettingValue<bool>("change-secondary-color");
+  auto mColorD = mod->getSettingValue<bool>("change-main-color-dual");
+  auto sColorD = mod->getSettingValue<bool>("change-secondary-color-dual");
+  auto waveTrail = mod->getSettingValue<bool>("change-wave-trail");
+  auto playerGlow = mod->getSettingValue<bool>("change-glow-color");
+
+  return !(mColor || sColor || mColorD || sColorD || waveTrail || playerGlow);
+}
 
 ccColor3B getScreenColor(bool onLevelEditorLayer = false) {
+  if (modSettingsDisabled())
+    return ccColor3B(0.f, 0.f, 0.f);
+
   auto size = CCDirector::sharedDirector()->getWinSize();
 
   auto renderTexture = CCRenderTexture::create(1, 1);
@@ -102,8 +117,6 @@ void changeColor(ccColor3B color, bool onLevelEditorLayer = false) {
     player2->m_glowColor = color;
     player2->updateGlowColor();
   }
-
-	return;
 }
 
 void getScreenColorAndChange(bool onLevelEditorLayer = false) {
