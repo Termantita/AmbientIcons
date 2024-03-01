@@ -10,6 +10,7 @@ project(AmbientIcons VERSION 1.0.0)
 
 add_library(${PROJECT_NAME} SHARED
     src/main.cpp
+    src/AmbientColor.cpp
     # Add your cpp files here
 )
 

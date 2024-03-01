@@ -1,6 +1,9 @@
 {
 	"geode": "2.0.0-beta.21",
-	"gd": "2.204",
+	"gd": {
+		"android": "2.205",
+		"win": "2.204"
+	},
 	"version": "v1.3.2",
 	"id": "terma.ambienticons",
 	"name": "Ambient Icons",
@@ -78,6 +81,12 @@
 			"min": 0,
 			"max": 1000
 		},
+		"player-follow": {
+			"name": "Follow Player",
+			"description": "",
+			"type": "bool",
+			"default": true
+		},
 		"player-flash": {
 			"name": "Show Player Flash",
 			"description": "Show player flashes in dash orbs, spider orbs, teleports and spider dashes.\n<co>It may cause update color bugs when is enabled without 0ms update time</c>",
@@ -85,5 +94,6 @@
 			"default": false
 		}
 	},
+
 	"repository": "https://github.com/Termantita/AmbientIcons"
 }

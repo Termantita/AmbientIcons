@@ -1,5 +1,12 @@
 # Ambient Icons Changelog
 
+## v1.4.0
+
+- <cy>Added</c> integration with Globed TODO // TODO:
+- <cy>Added</c> *Follow Player* option for picking colors TODO // TODO:
+- <cy>Added</c> *Pick color offset* option, works with *Follow Player* // TODO:
+- <cy>Improved</c> code for better implementations
+
 ## v1.3.2
 
 - <cy>Added</c> link to *GitHub* Repo
