@@ -87,6 +87,12 @@
 			"type": "bool",
 			"default": true
 		},
+		"change-globed-icon": {
+			"name": "Change Globed icon color",
+			"description": "",
+			"type": "bool",
+			"default": false
+		},
 		"player-flash": {
 			"name": "Show Player Flash",
 			"description": "Show player flashes in dash orbs, spider orbs, teleports and spider dashes.\n<co>It may cause update color bugs when is enabled without 0ms update time</c>",

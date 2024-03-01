@@ -63,19 +63,19 @@ ccColor3B AmbientColor::getScreenColor() {
 
 void AmbientColor::setIconColor(ccColor3B color) {
 
-  if (Mod::get()->getSettingValue<bool>("change-main-color"))
+  if (changeMainColor)
     player1->setColor(color);
 
-  if (Mod::get()->getSettingValue<bool>("change-secondary-color"))
+  if (changeSecondaryColor)
     player1->setSecondColor(color);
 
-  if (Mod::get()->getSettingValue<bool>("change-main-color-dual"))
+  if (changeMainColorDual)
     player2->setColor(color);
 
-  if (Mod::get()->getSettingValue<bool>("change-secondary-color-dual"))
+  if (changeSecondaryColorDual)
     player2->setSecondColor(color);
 
-  if (Mod::get()->getSettingValue<bool>("change-wave-trail")) {
+  if (changeWaveTrail) {
     if (player1->m_isDart) {
       player1->m_waveTrail->setColor(color);
     }
@@ -84,7 +84,7 @@ void AmbientColor::setIconColor(ccColor3B color) {
     }
   }
 
-  if (Mod::get()->getSettingValue<bool>("change-glow-color")) {
+  if (changeGlowColor) {
     player1->m_glowColor = color;
     player1->updateGlowColor();
 
@@ -92,5 +92,24 @@ void AmbientColor::setIconColor(ccColor3B color) {
     player2->updateGlowColor();
   }
 
-  // Loader::get()->isModLoaded("dankmeme.globed2");
+  if (!(layer->m_level->isPlatformer()) && Loader::get()->isModLoaded("dankmeme.globed2") && Mod::get()->getSettingValue<bool>("change-globed-icon"))
+    setGlobedIconColor(color);
+}
+
+void AmbientColor::setGlobedIconColor(ccColor3B color) {
+  auto progressBarPlayer = layer->getChildByIDRecursive("dankmeme.globed2/self-player-progress");
+  
+  if (progressBarPlayer == nullptr)
+    return;
+    
+  auto globedPlayer = static_cast<SimplePlayer* >(progressBarPlayer->getChildren()->objectAtIndex(1));
+
+  if (changeMainColor)
+    globedPlayer->setColor(color);
+
+  if (changeSecondaryColor)
+    globedPlayer->setSecondColor(color);
+
+  if (changeGlowColor)
+    globedPlayer->setGlowOutline(color);
 }
