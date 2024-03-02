@@ -45,12 +45,16 @@ ccColor3B AmbientColor::getScreenColor() {
   
   layer->setPosition({-size.width * pickPos.x, -size.height * pickPos.y});
   
+  CCSprite* bgLayer;
+  
   auto parentBG = layer->getChildByID("main-node");
-  auto bgLayer = getChildOfType<CCSprite>(parentBG, 0);
+  
+  if (parentBG != nullptr)
+    bgLayer = getChildOfType<CCSprite>(parentBG, 0);
   
   renderTexture->begin();
   
-  if (pickBGColor)
+  if (pickBGColor && parentBG != nullptr)
     bgLayer->visit();
   else
     layer->visit();
@@ -99,7 +103,7 @@ void AmbientColor::setIconColor(ccColor3B color) {
     player2->updateGlowColor();
   }
 
-  if (!(layer->m_level->isPlatformer()) && Loader::get()->isModLoaded("dankmeme.globed2") && Mod::get()->getSettingValue<bool>("change-globed-icon"))
+  if (!(layer->m_level->isPlatformer()) && Loader::get()->isModLoaded("dankmeme.globed2") && Mod::get()->getSettingValue<bool>("change-globed-icon") && typeinfo_cast<PlayLayer* >(layer))
     setGlobedIconColor(color);
 }
 

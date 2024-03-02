@@ -4,7 +4,7 @@
 		"android": "2.205",
 		"win": "2.204"
 	},
-	"version": "v1.4.0",
+	"version": "v1.4.1",
 	"id": "terma.ambienticons",
 	"name": "Ambient Icons",
 	"developer": "Terma",
@@ -83,7 +83,7 @@
 		},
 		"pick-bg-color": {
 			"name": "Pick color from BG",
-			"description": "Picks the background color instead of picking the screen color.\n<co>Having this option disabled can cause flashing lights</c>",
+			"description": "Picks the background color instead of picking the screen color.\n<co>Having this option disabled can cause flashing lights. Doesn't change on custom BGs</c>",
 			"type": "bool",
 			"default": true
 		},

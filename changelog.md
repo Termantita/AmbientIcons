@@ -1,9 +1,13 @@
 # Ambient Icons Changelog
 
+## v1.4.1
+
+- <cy>Fixed</c> Ambient Icons v1.4.0
+
 ## v1.4.0
 
 - <cy>Added</c> integration with Globed Progressbar self-icon
-- <cy>Added</c> an option for picking the color only from the BG (big thanks to elnexreal)
+- <cy>Added</c> an option for picking the color only from the BG (big thanks to elnexreal) - Doesn't work on LevelEditorLayer (Level editor)
 - <cy>Improved</c> code for better implementations
 
 ## v1.3.2
