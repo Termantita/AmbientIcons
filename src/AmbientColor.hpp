@@ -15,6 +15,8 @@ public:
   bool changeSecondaryColorDual = Mod::get()->getSettingValue<bool>("change-secondary-color-dual");
   bool changeWaveTrail = Mod::get()->getSettingValue<bool>("change-wave-trail");
   bool changeGlowColor = Mod::get()->getSettingValue<bool>("change-glow-color");
+
+  bool pickBGColor = Mod::get()->getSettingValue<bool>("pick-bg-color");
   
   AmbientColor(GJBaseGameLayer* layer, CCPoint pos)
     : layer{layer}, pickPos{pos} {};

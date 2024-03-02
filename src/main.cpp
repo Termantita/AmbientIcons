@@ -18,11 +18,6 @@ $execute {
   });
 }
 
-// void getScreenColorAndChange(bool onLevelEditorLayer = false) {
-//   auto color = getScreenColor(onLevelEditorLayer);
-//   changeColor(color, onLevelEditorLayer);
-// }
-
 bool globalFirstTime = true;
 class $modify(PlayLayer) {
   void onExit() {

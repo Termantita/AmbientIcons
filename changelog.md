@@ -2,9 +2,8 @@
 
 ## v1.4.0
 
-- <cy>Added</c> integration with Globed Progressbar TODO // TODO:
-- <cy>Added</c> *Follow Player* option for picking colors TODO // TODO:
-- <cy>Added</c> *Pick color offset* option, works with *Follow Player* // TODO:
+- <cy>Added</c> integration with Globed Progressbar self-icon
+- <cy>Added</c> an option for picking the color only from the BG (big thanks to elnexreal)
 - <cy>Improved</c> code for better implementations
 
 ## v1.3.2

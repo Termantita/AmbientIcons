@@ -81,15 +81,15 @@
 			"min": 0,
 			"max": 1000
 		},
-		"player-follow": {
-			"name": "Follow Player",
-			"description": "",
+		"pick-bg-color": {
+			"name": "Pick color from BG",
+			"description": "Picks the background color instead of picking the screen color.\n<co>Having this option disabled can cause flashing lights</c>",
 			"type": "bool",
 			"default": true
 		},
 		"change-globed-icon": {
 			"name": "Change Globed icon color",
-			"description": "",
+			"description": "Changes the colors of the icon in the progress bar when playing with globed in a normal level.",
 			"type": "bool",
 			"default": false
 		},

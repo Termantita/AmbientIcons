@@ -14,3 +14,4 @@ Now working on **PlayLayer** and **LevelEditorLayer**!
 - Ambient mode for dual mode
 - Ambient mode for wave trail and glow
 - Adjust where to pick the colors in the mod's settings (X and Y axes)
+- Pick the color from the BG wihout objects affecting the ambient mode

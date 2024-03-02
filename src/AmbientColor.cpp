@@ -45,8 +45,16 @@ ccColor3B AmbientColor::getScreenColor() {
   
   layer->setPosition({-size.width * pickPos.x, -size.height * pickPos.y});
   
+  auto parentBG = layer->getChildByID("main-node");
+  auto bgLayer = getChildOfType<CCSprite>(parentBG, 0);
+  
   renderTexture->begin();
-  layer->visit();
+  
+  if (pickBGColor)
+    bgLayer->visit();
+  else
+    layer->visit();
+  
   renderTexture->end();
 
   layer->setPosition(oldPos);
@@ -62,7 +70,6 @@ ccColor3B AmbientColor::getScreenColor() {
 }
 
 void AmbientColor::setIconColor(ccColor3B color) {
-
   if (changeMainColor)
     player1->setColor(color);
 
