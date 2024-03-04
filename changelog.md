@@ -2,7 +2,9 @@
 
 ## v1.4.1
 
-- <cy>Fixed</c> Ambient Icons v1.4.0
+- <cy>Fixed</c> Ambient Icons v1.4.0 (mainly pick BG feature)
+- <cy>Added</c> support for `Node IDs` when picking colors from BG
+- <cy>Fixed</c> picking color from BG don't working with GD 2.2 shaders
 
 ## v1.4.0
 

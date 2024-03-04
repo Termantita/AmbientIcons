@@ -32,6 +32,7 @@ bool modSettingsDisabled() {
   return !(mColor || sColor || mColorD || sColorD || waveTrail || playerGlow);
 }
 
+
 ccColor3B AmbientColor::getScreenColor() {
   if (modSettingsDisabled())
     return ccColor3B(0.f, 0.f, 0.f);
@@ -45,21 +46,32 @@ ccColor3B AmbientColor::getScreenColor() {
   
   layer->setPosition({-size.width * pickPos.x, -size.height * pickPos.y});
   
-  CCSprite* bgLayer;
+  CCNode* parentBG = nullptr;
+  CCSprite* bgSprite = nullptr;
+	if (typeinfo_cast<PlayLayer* >(layer)) // Get from ShaderLayer (enabled when there are shaders in the level)
+    parentBG = typeinfo_cast<ShaderLayer* >(layer->getChildren()->objectAtIndex(3));
+  else
+    parentBG = typeinfo_cast<ShaderLayer* >(layer->getChildren()->objectAtIndex(4));
+    
+
+	if (!parentBG) { 
+		parentBG = static_cast<CCNode* >(layer->getChildren()->objectAtIndex(0)); // Get from normal CCNode
+
+		if (Loader::get()->getLoadedMod("geode.node-ids")) // Get from Node IDs
+			parentBG = layer->getChildByIDRecursive("main-node");
+	} else
+		parentBG = static_cast<CCNode* >(parentBG->getChildren()->objectAtIndex(1));
   
-  auto parentBG = layer->getChildByID("main-node");
+	bgSprite = getChildOfType<CCSprite>(parentBG, 0);
+
+  renderTexture->begin(); // Rendering block
   
-  if (parentBG != nullptr)
-    bgLayer = getChildOfType<CCSprite>(parentBG, 0);
-  
-  renderTexture->begin();
-  
-  if (pickBGColor && parentBG != nullptr)
-    bgLayer->visit();
+	if (pickBGColor && parentBG && bgSprite)
+    bgSprite->visit();
   else
     layer->visit();
   
-  renderTexture->end();
+  renderTexture->end(); // Rendering block
 
   layer->setPosition(oldPos);
 
@@ -110,7 +122,7 @@ void AmbientColor::setIconColor(ccColor3B color) {
 void AmbientColor::setGlobedIconColor(ccColor3B color) {
   auto progressBarPlayer = layer->getChildByIDRecursive("dankmeme.globed2/self-player-progress");
   
-  if (progressBarPlayer == nullptr)
+  if (!progressBarPlayer)
     return;
     
   auto globedPlayer = static_cast<SimplePlayer* >(progressBarPlayer->getChildren()->objectAtIndex(1));
