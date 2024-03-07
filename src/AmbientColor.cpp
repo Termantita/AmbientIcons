@@ -8,131 +8,140 @@ double globalXPos = Mod::get()->getSettingValue<double>("render-x-pos");
 double globalYPos = Mod::get()->getSettingValue<double>("render-y-pos");
 
 $execute {
-  listenForSettingChanges("render-x-pos", +[](double value) {
+	listenForSettingChanges("render-x-pos", +[](double value) {
 		globalXPos = value;
-  });
+  	});
   
-  listenForSettingChanges("render-y-pos", +[](double value) {
+  	listenForSettingChanges("render-y-pos", +[](double value) {
 		globalYPos = value;
-  });
+  	});
 }
 
+ccColor3B AmbientColor::getRenderColor(CCSprite* bgSprite) {
+  auto renderTexture = CCRenderTexture::create(1, 1);
+
+	renderTexture->begin(); // Rendering block
+  
+	if (m_pickBGColor && bgSprite)
+		bgSprite->visit();
+	else
+		m_layer->visit();
+  
+  	renderTexture->end(); // Rendering block
 
 
-bool modSettingsDisabled() {
-  auto mod = Mod::get();
+  	auto img = renderTexture->newCCImage();
+  	auto data = img->getData();
+  	ccColor3B color = ccColor3B(data[0], data[1], data[2]);
+	
+  	delete img;
+  	renderTexture->removeMeAndCleanup();
 
-  auto mColor = mod->getSettingValue<bool>("change-main-color");
-  auto sColor = mod->getSettingValue<bool>("change-secondary-color");
-  auto mColorD = mod->getSettingValue<bool>("change-main-color-dual");
-  auto sColorD = mod->getSettingValue<bool>("change-secondary-color-dual");
-  auto waveTrail = mod->getSettingValue<bool>("change-wave-trail");
-  auto playerGlow = mod->getSettingValue<bool>("change-glow-color");
+	setPickBGColor();
 
-  return !(mColor || sColor || mColorD || sColorD || waveTrail || playerGlow);
+	return color;
 }
-
 
 ccColor3B AmbientColor::getScreenColor() {
-  if (modSettingsDisabled())
-    return ccColor3B(0.f, 0.f, 0.f);
+	
+	if (!(m_changeMainColor || m_changeSecondaryColor || m_changeMainColorDual || m_changeSecondaryColorDual || m_changeWaveTrail || m_changeGlowColor))
+		return ccColor3B(0.f, 0.f, 0.f);
 
-  pickPos = CCPoint(globalXPos, globalYPos);
+  	m_pickPos = CCPoint(globalXPos, globalYPos);
 
-  auto size = CCDirector::sharedDirector()->getWinSize();
+  	auto size = CCDirector::sharedDirector()->getWinSize();
 
-  auto renderTexture = CCRenderTexture::create(1, 1);
-  auto oldPos = layer->getPosition();
+  	auto oldPos = m_layer->getPosition();
   
-  layer->setPosition({-size.width * pickPos.x, -size.height * pickPos.y});
+  	m_layer->setPosition({-size.width * m_pickPos.x, -size.height * m_pickPos.y});
   
-  CCNode* parentBG = nullptr;
-  CCSprite* bgSprite = nullptr;
-	if (typeinfo_cast<PlayLayer* >(layer)) // Get from ShaderLayer (enabled when there are shaders in the level)
-    parentBG = typeinfo_cast<ShaderLayer* >(layer->getChildren()->objectAtIndex(3));
-  else
-    parentBG = typeinfo_cast<ShaderLayer* >(layer->getChildren()->objectAtIndex(4));
-    
+	CCSprite* bgSprite = nullptr;
+	if (typeinfo_cast<PlayLayer* >(m_layer)) {
+		auto parent = m_layer->getChildByIDRecursive("main-node");
+		bgSprite = getChildOfType<CCSprite>(parent, 0);
+	} else { // FIXME: bg picker from BG node (CCSprite) for LevelEditorLayer. Tested in shitty kocmoc
+		auto parent = getChildOfType<CCNode>(m_layer, 0);
+		log::info("parent: {}", parent);
+		bgSprite = getChildOfType<CCSprite>(parent, 0);
+		log::info("bgSprite: {}", bgSprite);
 
-	if (!parentBG) { 
-		parentBG = static_cast<CCNode* >(layer->getChildren()->objectAtIndex(0)); // Get from normal CCNode
+		if (!bgSprite) {
+			// auto parent = getChildOfType<ShaderLayer>(m_layer, 4);
+			auto parent = typeinfo_cast<ShaderLayer* >(m_layer->getChildren()->objectAtIndex(4));
+			log::info("parent: {}", parent);
+			auto child = getChildOfType<CCNode>(parent, 1);
+			log::info("child: {}", child);
+			bgSprite = getChildOfType<CCSprite>(child, 0);
+			log::info("bgSprite: {}", bgSprite);
+		}
+	}
 
-		if (Loader::get()->getLoadedMod("geode.node-ids")) // Get from Node IDs
-			parentBG = layer->getChildByIDRecursive("main-node");
-	} else
-		parentBG = static_cast<CCNode* >(parentBG->getChildren()->objectAtIndex(1));
-  
-	bgSprite = getChildOfType<CCSprite>(parentBG, 0);
+	
+	ccColor3B color = getRenderColor(bgSprite);
+  	
 
-  renderTexture->begin(); // Rendering block
-  
-	if (pickBGColor && parentBG && bgSprite)
-    bgSprite->visit();
-  else
-    layer->visit();
-  
-  renderTexture->end(); // Rendering block
+	if (color == ccColor3B(0, 0, 0) && bgSprite && m_layer->m_level->isPlatformer()) {
+		m_pickBGColor = false;
+		color = getRenderColor(bgSprite);
+	}
+	
+	m_layer->setPosition(oldPos);
 
-  layer->setPosition(oldPos);
+	log::info("rgb({}, {}, {})", color.r, color.g, color.b);
 
-  auto img = renderTexture->newCCImage();
-  auto data = img->getData();
-  ccColor3B color = ccColor3B(data[0], data[1], data[2]);
-
-  delete img;
-  renderTexture->removeMeAndCleanup();
-
-  return color;
+  	return color;
 }
 
 void AmbientColor::setIconColor(ccColor3B color) {
-  if (changeMainColor)
-    player1->setColor(color);
+  	if (m_changeMainColor)
+		m_player1->setColor(color);
 
-  if (changeSecondaryColor)
-    player1->setSecondColor(color);
+  	if (m_changeSecondaryColor)
+		m_player1->setSecondColor(color);
 
-  if (changeMainColorDual)
-    player2->setColor(color);
+  	if (m_changeMainColorDual)
+		m_player2->setColor(color);
 
-  if (changeSecondaryColorDual)
-    player2->setSecondColor(color);
+  	if (m_changeSecondaryColorDual)
+		m_player2->setSecondColor(color);
 
-  if (changeWaveTrail) {
-    if (player1->m_isDart) {
-      player1->m_waveTrail->setColor(color);
-    }
-    if (player2->m_isDart) {
-      player2->m_waveTrail->setColor(color);
-    }
-  }
+  	if (m_changeWaveTrail) {
+		if (m_player1->m_isDart) {
+	  		m_player1->m_waveTrail->setColor(color);
+		}
+		if (m_player2->m_isDart) {
+	  		m_player2->m_waveTrail->setColor(color);
+		}
+  	}
 
-  if (changeGlowColor) {
-    player1->m_glowColor = color;
-    player1->updateGlowColor();
+  	if (m_changeGlowColor) {
+		m_player1->m_glowColor = color;
+		m_player1->updateGlowColor();
 
-    player2->m_glowColor = color;
-    player2->updateGlowColor();
-  }
+		m_player2->m_glowColor = color;
+		m_player2->updateGlowColor();
+  	}
 
-  if (!(layer->m_level->isPlatformer()) && Loader::get()->isModLoaded("dankmeme.globed2") && Mod::get()->getSettingValue<bool>("change-globed-icon") && typeinfo_cast<PlayLayer* >(layer))
-    setGlobedIconColor(color);
+  	if (!(m_layer->m_level->isPlatformer()) && Loader::get()->isModLoaded("dankmeme.globed2") && Mod::get()->getSettingValue<bool>("change-globed-icon") && typeinfo_cast<PlayLayer* >(m_layer))
+		setGlobedIconColor(color);
 }
 
 void AmbientColor::setGlobedIconColor(ccColor3B color) {
-  auto progressBarPlayer = layer->getChildByIDRecursive("dankmeme.globed2/self-player-progress");
+	auto progressBarPlayer = m_layer->getChildByIDRecursive("dankmeme.globed2/self-player-progress");
   
-  if (!progressBarPlayer)
-    return;
-    
-  auto globedPlayer = static_cast<SimplePlayer* >(progressBarPlayer->getChildren()->objectAtIndex(1));
+  	if (!progressBarPlayer)
+		return;
+	
+  	auto globedPlayer = getChildOfType<SimplePlayer>(progressBarPlayer, 1);
+	if (!globedPlayer)
+		return;
 
-  if (changeMainColor)
-    globedPlayer->setColor(color);
+  	if (m_changeMainColor)
+		globedPlayer->setColor(color);
 
-  if (changeSecondaryColor)
-    globedPlayer->setSecondColor(color);
+  	if (m_changeSecondaryColor)
+		globedPlayer->setSecondColor(color);
 
-  if (changeGlowColor)
-    globedPlayer->setGlowOutline(color);
+  	if (m_changeGlowColor)
+		globedPlayer->setGlowOutline(color);
 }

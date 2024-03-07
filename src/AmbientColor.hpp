@@ -2,41 +2,61 @@
 
 using namespace geode::prelude;
 
-class AmbientColor {
-private:
-	GJBaseGameLayer* layer;
-	CCPoint pickPos;
-
-	PlayerObject* player1;
-	PlayerObject* player2;
-
-	bool changeMainColor;
-	bool changeSecondaryColor;
-	bool changeMainColorDual;
-	bool changeSecondaryColorDual;
-	bool changeWaveTrail;
-	bool changeGlowColor;
-  
-	bool pickBGColor;
-public:
-  AmbientColor(GJBaseGameLayer* layer, CCPoint pos)
-    : layer{layer}, pickPos{pos} {
-	  	player1 = layer->m_player1;
-      player2 = layer->m_player2;
+class AmbientColor : public CCNode {
+protected:
+    bool init(GJBaseGameLayer* layer) {
+        if (!CCNode::init())
+            return false;
         
-      changeMainColor = Mod::get()->getSettingValue<bool>("change-main-color");
-      changeSecondaryColor = Mod::get()->getSettingValue<bool>("change-secondary-color");
-      changeMainColorDual = Mod::get()->getSettingValue<bool>("change-main-color-dual");
-      changeSecondaryColorDual = Mod::get()->getSettingValue<bool>("change-secondary-color-dual");
-      changeWaveTrail = Mod::get()->getSettingValue<bool>("change-wave-trail");
-      changeGlowColor = Mod::get()->getSettingValue<bool>("change-glow-color");
+		this->m_layer = layer;
 
-      pickBGColor = Mod::get()->getSettingValue<bool>("pick-bg-color");
+		this->m_player1 = layer->m_player1;
+      	this->m_player2 = layer->m_player2;
+        
+      	m_changeMainColor = Mod::get()->getSettingValue<bool>("change-main-color");
+      	m_changeSecondaryColor = Mod::get()->getSettingValue<bool>("change-secondary-color");
+      	m_changeMainColorDual = Mod::get()->getSettingValue<bool>("change-main-color-dual");
+      	m_changeSecondaryColorDual = Mod::get()->getSettingValue<bool>("change-secondary-color-dual");
+      	m_changeWaveTrail = Mod::get()->getSettingValue<bool>("change-wave-trail");
+      	m_changeGlowColor = Mod::get()->getSettingValue<bool>("change-glow-color");
 
-    };
+      	m_pickBGColor = Mod::get()->getSettingValue<bool>("pick-bg-color");
+        
+        return true;
+    }
+private:
+	GJBaseGameLayer* m_layer;
+	CCPoint m_pickPos;
+
+	PlayerObject* m_player1;
+	PlayerObject* m_player2;
+
+	bool m_changeMainColor;
+	bool m_changeSecondaryColor;
+	bool m_changeMainColorDual;
+	bool m_changeSecondaryColorDual;
+	bool m_changeWaveTrail;
+	bool m_changeGlowColor;
   
-  
-  ccColor3B getScreenColor();
-  void setIconColor(ccColor3B color);
-  void setGlobedIconColor(ccColor3B color);
+	bool m_pickBGColor;
+
+	ccColor3B getRenderColor(CCSprite* bgSprite);
+public:
+    static AmbientColor* create(GJBaseGameLayer* layer) {
+        auto ret = new AmbientColor();
+        if (ret && ret->init(layer)) {
+            ret->autorelease();
+            return ret;
+        }
+        CC_SAFE_DELETE(ret);
+        return nullptr;
+    }
+
+	ccColor3B getScreenColor();
+	void setIconColor(ccColor3B color);
+	void setGlobedIconColor(ccColor3B color);
+
+	void setPickBGColor() {
+		m_pickBGColor = Mod::get()->getSettingValue<bool>("pick-bg-color");
+	}
 };

@@ -1,5 +1,12 @@
 # Ambient Icons Changelog
 
+## v1.4.2 - // TODO: v
+
+- <cy>Added</c> `Node IDs` as a dependency
+- Do some pr's for bindings and node ids (maybe)
+- Add new conflicting incompatibilities
+- Porting to Android (yipeee)
+
 ## v1.4.1
 
 - <cy>Fixed</c> Ambient Icons v1.4.0 (mainly pick BG feature)

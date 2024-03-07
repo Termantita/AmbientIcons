@@ -1,10 +1,10 @@
 {
 	"geode": "2.0.0-beta.21",
 	"gd": {
-		"android": "2.205",
-		"win": "2.204"
+		"win": "2.204",
+		"android": "2.205"
 	},
-	"version": "v1.4.1",
+	"version": "v1.4.2",
 	"id": "terma.ambienticons",
 	"name": "Ambient Icons",
 	"developer": "Terma",
@@ -100,6 +100,29 @@
 			"default": false
 		}
 	},
+	"incompatibilities": [{
+		"id": "TheSillyDoggo.Cheats",
+		"version": "*",
+		"importance": "conflicting"
+	},
+	{
+		"id": "saumondeluxe.rainbow_icon",
+		"version": "*",
+		"importance": "conflicting"
+	},
+	{
+		"id": "ninkaz.blending_glow",
+		"version": "*",
+		"importance": "conflicting"
+	}],
+	"dependencies": [
+	{
+		"id": "geode.node-ids",
+		"platforms": ["windows", "android32", "android64"],
+		"importance": "required",
+		"version": "*"
+	}
+	],
 
 	"repository": "https://github.com/Termantita/AmbientIcons"
 }

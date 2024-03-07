@@ -3,6 +3,7 @@
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/PlayerObject.hpp>
 #include <Geode/modify/LevelEditorLayer.hpp>
+#include <Geode/modify/GJBaseGameLayer.hpp>
 
 #include <Geode/loader/SettingEvent.hpp>
 
@@ -20,9 +21,17 @@ $execute {
 
 bool globalFirstTime = true;
 class $modify(PlayLayer) {
+  Ref<AmbientColor> m_ambientChanger;
   void onExit() {
     globalFirstTime = true;
     PlayLayer::onExit();
+  }
+
+  bool init(GJGameLevel* p0, bool p1, bool p2) {
+    if (!PlayLayer::init(p0, p1, p2))
+      return false;
+    m_fields->m_ambientChanger = AmbientColor::create(this);
+    return true;
   }
 
 	void postUpdate(float p0) {
@@ -30,19 +39,16 @@ class $modify(PlayLayer) {
 
     static bool executeCode = true;
     
-		
     std::chrono::milliseconds interval(globalInterval);
     
     auto currentTime = std::chrono::steady_clock::now();
 		
     static auto lastExecutionTime = currentTime;
-    
     auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
 
-    AmbientColor changer(this, CCPoint(Mod::get()->getSettingValue<double>("render-x-pos"), Mod::get()->getSettingValue<double>("render-y-pos")));
     
     if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
-			changer.setIconColor(changer.getScreenColor());
+			m_fields->m_ambientChanger->setIconColor(m_fields->m_ambientChanger->getScreenColor());
       lastExecutionTime = currentTime;
 
 			if (globalFirstTime)
@@ -54,37 +60,39 @@ class $modify(PlayLayer) {
 };
 
 class $modify(LevelEditorLayer) {
-  void postUpdate(float p0) {
-    LevelEditorLayer::postUpdate(p0);
+  Ref<AmbientColor> m_ambientChanger;
 
-    static bool executeCode = true;
-    
+	void postUpdate(float p0) {
+		LevelEditorLayer::postUpdate(p0);
+
+		static bool executeCode = true;
 		
-    std::chrono::milliseconds interval(globalInterval);
-    
-    auto currentTime = std::chrono::steady_clock::now();
-    
-    static auto lastExecutionTime = currentTime;
+		std::chrono::milliseconds interval(globalInterval);
 		
-    auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
+		auto currentTime = std::chrono::steady_clock::now();
+		
+		static auto lastExecutionTime = currentTime;
+			
+		auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
 
-    AmbientColor changer(this, CCPoint(Mod::get()->getSettingValue<double>("render-x-pos"), Mod::get()->getSettingValue<double>("render-y-pos")));
 
-    if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
-			changer.setIconColor(changer.getScreenColor());
-      lastExecutionTime = currentTime;
+		m_fields->m_ambientChanger = AmbientColor::create(this);
+
+		if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
+			m_fields->m_ambientChanger->setIconColor(m_fields->m_ambientChanger->getScreenColor());
+			lastExecutionTime = currentTime;
 
 			if (globalFirstTime)
 				globalFirstTime = false;
-    }
-
-    executeCode = !executeCode;
-  }
+		}
+		
+		executeCode = !executeCode;
+	}
 };
 
 class $modify(PlayerObject) {
-  void flashPlayer(float p0, float p1, ccColor3B mainColor, ccColor3B secondColor) {
-    if (Mod::get()->getSettingValue<bool>("player-flash"))
-      PlayerObject::flashPlayer(p0, p1, mainColor, secondColor);
-  }
+	void flashPlayer(float p0, float p1, ccColor3B mainColor, ccColor3B secondColor) {
+		if (Mod::get()->getSettingValue<bool>("player-flash"))
+		PlayerObject::flashPlayer(p0, p1, mainColor, secondColor);
+	}
 };
