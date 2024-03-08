@@ -8,6 +8,7 @@ Can cause performance issues with <cy>Globed</c>.
 
 ## Features
 
+- Ported to Android (<cy>opaque colors</c> issue - for some reason colors aren't like in PC)
 - Ambient mode for main color and secondary color
 - Ambient mode for dual mode
 - Ambient mode for wave trail and glow
