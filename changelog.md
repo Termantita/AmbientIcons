@@ -1,11 +1,9 @@
 # Ambient Icons Changelog
 
-## v1.4.2 - // TODO: v
+## v1.4.2
 
 - <cy>Added</c> `Node IDs` as a dependency
-- Do some pr's for bindings and node ids (maybe)
-- Add new conflicting incompatibilities
-- Porting to Android (yipeee)
+- <cy>Added</cy> conflicting mod incompatibilities in mod.json
 
 ## v1.4.1
 

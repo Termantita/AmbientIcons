@@ -21,47 +21,47 @@ $execute {
 
 bool globalFirstTime = true;
 class $modify(PlayLayer) {
-  Ref<AmbientColor> m_ambientChanger;
-  void onExit() {
-    globalFirstTime = true;
-    PlayLayer::onExit();
-  }
+	Ref<AmbientColor> m_ambientChanger;
+  	void onExit() {
+    	globalFirstTime = true;
+    	PlayLayer::onExit();
+  	}
 
-  bool init(GJGameLevel* p0, bool p1, bool p2) {
-    if (!PlayLayer::init(p0, p1, p2))
-      return false;
-    m_fields->m_ambientChanger = AmbientColor::create(this);
-    return true;
-  }
+  	bool init(GJGameLevel* p0, bool p1, bool p2) {
+    	if (!PlayLayer::init(p0, p1, p2))
+      		return false;
+    	m_fields->m_ambientChanger = AmbientColor::create(this);
+    	return true;
+  	}
 
 	void postUpdate(float p0) {
 
-    static bool executeCode = true;
+    	static bool executeCode = true;
     
-    std::chrono::milliseconds interval(globalInterval);
+    	std::chrono::milliseconds interval(globalInterval);
     
-    auto currentTime = std::chrono::steady_clock::now();
+    	auto currentTime = std::chrono::steady_clock::now();
 		
-    static auto lastExecutionTime = currentTime;
-    auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
+    	static auto lastExecutionTime = currentTime;
+    	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
 
     
-    if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
+    	if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
 			m_fields->m_ambientChanger->setIconColor(m_fields->m_ambientChanger->getScreenColor());
-      lastExecutionTime = currentTime;
+      		lastExecutionTime = currentTime;
 
 			if (globalFirstTime)
 				globalFirstTime = false;
-    }
+    	}
 
-    executeCode = !executeCode;
+    	executeCode = !executeCode;
     
 		PlayLayer::postUpdate(p0);
 	}
 };
 
 class $modify(LevelEditorLayer) {
-  Ref<AmbientColor> m_ambientChanger;
+	Ref<AmbientColor> m_ambientChanger;
 
 	void postUpdate(float p0) {
 
@@ -74,7 +74,6 @@ class $modify(LevelEditorLayer) {
 		static auto lastExecutionTime = currentTime;
 			
 		auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
-
 
 		m_fields->m_ambientChanger = AmbientColor::create(this);
 

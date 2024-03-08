@@ -57,9 +57,7 @@ ccColor3B AmbientColor::getScreenColor() {
 	CCSprite* bgSprite = nullptr;
 	if (typeinfo_cast<PlayLayer* >(m_layer)) {
 		auto parent = m_layer->getChildByIDRecursive("main-node");
-		log::info("parent: {}", parent);
 		bgSprite = getChildOfType<CCSprite>(parent, 0);
-		log::info("bgSprite: {}", bgSprite);
 	}
 	
 	ccColor3B color = getRenderColor(bgSprite);

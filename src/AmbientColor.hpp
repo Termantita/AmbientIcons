@@ -21,7 +21,7 @@ protected:
       	m_changeGlowColor = Mod::get()->getSettingValue<bool>("change-glow-color");
 
       	m_pickBGColor = Mod::get()->getSettingValue<bool>("pick-bg-color");
-				m_changeMethodWhenBlack = Mod::get()->getSettingValue<bool>("change-method-when-black");
+			m_changeMethodWhenBlack = Mod::get()->getSettingValue<bool>("change-method-when-black");
         
         return true;
     }
