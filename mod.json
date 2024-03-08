@@ -87,6 +87,12 @@
 			"type": "bool",
 			"default": true
 		},
+		"change-method-when-black": {
+			"name": "Change pick color method",
+			"description": "Change the pick color method (bg picker to screen picker) if the color picked is black (0,0,0)",
+			"type": "bool",
+			"default": true
+		},
 		"change-globed-icon": {
 			"name": "Change Globed icon color",
 			"description": "Changes the colors of the icon in the progress bar when playing with globed in a normal level.",
@@ -118,7 +124,6 @@
 	"dependencies": [
 	{
 		"id": "geode.node-ids",
-		"platforms": ["windows", "android32", "android64"],
 		"importance": "required",
 		"version": "*"
 	}

@@ -43,7 +43,6 @@ ccColor3B AmbientColor::getRenderColor(CCSprite* bgSprite) {
 }
 
 ccColor3B AmbientColor::getScreenColor() {
-	
 	if (!(m_changeMainColor || m_changeSecondaryColor || m_changeMainColorDual || m_changeSecondaryColorDual || m_changeWaveTrail || m_changeGlowColor))
 		return ccColor3B(0.f, 0.f, 0.f);
 
@@ -58,36 +57,21 @@ ccColor3B AmbientColor::getScreenColor() {
 	CCSprite* bgSprite = nullptr;
 	if (typeinfo_cast<PlayLayer* >(m_layer)) {
 		auto parent = m_layer->getChildByIDRecursive("main-node");
-		bgSprite = getChildOfType<CCSprite>(parent, 0);
-	} else { // FIXME: bg picker from BG node (CCSprite) for LevelEditorLayer. Tested in shitty kocmoc
-		auto parent = getChildOfType<CCNode>(m_layer, 0);
 		log::info("parent: {}", parent);
 		bgSprite = getChildOfType<CCSprite>(parent, 0);
 		log::info("bgSprite: {}", bgSprite);
-
-		if (!bgSprite) {
-			// auto parent = getChildOfType<ShaderLayer>(m_layer, 4);
-			auto parent = typeinfo_cast<ShaderLayer* >(m_layer->getChildren()->objectAtIndex(4));
-			log::info("parent: {}", parent);
-			auto child = getChildOfType<CCNode>(parent, 1);
-			log::info("child: {}", child);
-			bgSprite = getChildOfType<CCSprite>(child, 0);
-			log::info("bgSprite: {}", bgSprite);
-		}
 	}
-
 	
 	ccColor3B color = getRenderColor(bgSprite);
   	
-
-	if (color == ccColor3B(0, 0, 0) && bgSprite && m_layer->m_level->isPlatformer()) {
+	if (color == ccColor3B(0, 0, 0) && bgSprite && m_changeMethodWhenBlack) {
 		m_pickBGColor = false;
 		color = getRenderColor(bgSprite);
 	}
 	
 	m_layer->setPosition(oldPos);
 
-	log::info("rgb({}, {}, {})", color.r, color.g, color.b);
+	log::info("rgb({},{},{})", color.r, color.g, color.b);
 
   	return color;
 }
@@ -122,7 +106,7 @@ void AmbientColor::setIconColor(ccColor3B color) {
 		m_player2->updateGlowColor();
   	}
 
-  	if (!(m_layer->m_level->isPlatformer()) && Loader::get()->isModLoaded("dankmeme.globed2") && Mod::get()->getSettingValue<bool>("change-globed-icon") && typeinfo_cast<PlayLayer* >(m_layer))
+	if (!(m_layer->m_level->isPlatformer()) && Loader::get()->isModLoaded("dankmeme.globed2") && Mod::get()->getSettingValue<bool>("change-globed-icon") && typeinfo_cast<PlayLayer* >(m_layer))
 		setGlobedIconColor(color);
 }
 
@@ -132,7 +116,7 @@ void AmbientColor::setGlobedIconColor(ccColor3B color) {
   	if (!progressBarPlayer)
 		return;
 	
-  	auto globedPlayer = getChildOfType<SimplePlayer>(progressBarPlayer, 1);
+  	auto globedPlayer = static_cast<SimplePlayer* >(progressBarPlayer->getChildren()->objectAtIndex(1));
 	if (!globedPlayer)
 		return;
 

@@ -35,7 +35,6 @@ class $modify(PlayLayer) {
   }
 
 	void postUpdate(float p0) {
-    PlayLayer::postUpdate(p0);
 
     static bool executeCode = true;
     
@@ -56,6 +55,8 @@ class $modify(PlayLayer) {
     }
 
     executeCode = !executeCode;
+    
+		PlayLayer::postUpdate(p0);
 	}
 };
 
@@ -63,7 +64,6 @@ class $modify(LevelEditorLayer) {
   Ref<AmbientColor> m_ambientChanger;
 
 	void postUpdate(float p0) {
-		LevelEditorLayer::postUpdate(p0);
 
 		static bool executeCode = true;
 		
@@ -87,6 +87,7 @@ class $modify(LevelEditorLayer) {
 		}
 		
 		executeCode = !executeCode;
+		LevelEditorLayer::postUpdate(p0);
 	}
 };
 

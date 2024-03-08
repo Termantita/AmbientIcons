@@ -21,6 +21,7 @@ protected:
       	m_changeGlowColor = Mod::get()->getSettingValue<bool>("change-glow-color");
 
       	m_pickBGColor = Mod::get()->getSettingValue<bool>("pick-bg-color");
+				m_changeMethodWhenBlack = Mod::get()->getSettingValue<bool>("change-method-when-black");
         
         return true;
     }
@@ -39,6 +40,7 @@ private:
 	bool m_changeGlowColor;
   
 	bool m_pickBGColor;
+	bool m_changeMethodWhenBlack;
 
 	ccColor3B getRenderColor(CCSprite* bgSprite);
 public:
