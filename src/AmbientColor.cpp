@@ -71,8 +71,6 @@ ccColor3B AmbientColor::getScreenColor() {
 	
 	m_layer->setPosition(oldPos);
 
-	log::info("rgb({},{},{})", color.r, color.g, color.b);
-
   	return color;
 }
 
