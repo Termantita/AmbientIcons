@@ -69,6 +69,13 @@ class $modify(PlayLayer) {
 class $modify(LevelEditorLayer) {
 	Ref<AmbientColor> m_ambientChanger;
 
+	bool init(GJGameLevel* p0, bool p1) {
+		if (!LevelEditorLayer::init(p0, p1))
+			return false;
+		m_fields->m_ambientChanger = AmbientColor::create(this);
+		return true;
+	}
+
 	void postUpdate(float p0) {
 		LevelEditorLayer::postUpdate(p0);
 
@@ -81,7 +88,6 @@ class $modify(LevelEditorLayer) {
 		static auto lastExecutionTime = currentTime;
 		auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
 
-		m_fields->m_ambientChanger = AmbientColor::create(this);
 
 		if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
 			m_fields->m_ambientChanger->setIconColor(m_fields->m_ambientChanger->getScreenColor());
