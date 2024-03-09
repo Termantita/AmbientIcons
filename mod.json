@@ -4,7 +4,7 @@
 		"win": "2.204",
 		"android": "2.205"
 	},
-	"version": "v1.4.2",
+	"version": "v1.4.3",
 	"id": "terma.ambienticons",
 	"name": "Ambient Icons",
 	"developer": "Terma",
@@ -92,12 +92,6 @@
 			"description": "Change the pick color method (bg picker to screen picker) if the color picked is black (0,0,0)",
 			"type": "bool",
 			"default": true
-		},
-		"change-globed-icon": {
-			"name": "Change Globed icon color",
-			"description": "Changes the colors of the icon in the progress bar when playing with globed in a normal level.",
-			"type": "bool",
-			"default": false
 		},
 		"player-flash": {
 			"name": "Show Player Flash",

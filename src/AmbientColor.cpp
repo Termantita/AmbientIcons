@@ -18,7 +18,7 @@ $execute {
 }
 
 ccColor3B AmbientColor::getRenderColor(CCSprite* bgSprite) {
-  auto renderTexture = CCRenderTexture::create(1, 1);
+	auto renderTexture = CCRenderTexture::create(1, 1);
 
 	renderTexture->begin(); // Rendering block
   
@@ -101,27 +101,4 @@ void AmbientColor::setIconColor(ccColor3B color) {
 		m_player2->m_glowColor = color;
 		m_player2->updateGlowColor();
   	}
-
-	if (!(m_layer->m_level->isPlatformer()) && Loader::get()->isModLoaded("dankmeme.globed2") && Mod::get()->getSettingValue<bool>("change-globed-icon") && typeinfo_cast<PlayLayer* >(m_layer))
-		setGlobedIconColor(color);
-}
-
-void AmbientColor::setGlobedIconColor(ccColor3B color) {
-	auto progressBarPlayer = m_layer->getChildByIDRecursive("dankmeme.globed2/self-player-progress");
-  
-  	if (!progressBarPlayer)
-		return;
-	
-  	auto globedPlayer = static_cast<SimplePlayer* >(progressBarPlayer->getChildren()->objectAtIndex(1));
-	if (!globedPlayer)
-		return;
-
-  	if (m_changeMainColor)
-		globedPlayer->setColor(color);
-
-  	if (m_changeSecondaryColor)
-		globedPlayer->setSecondColor(color);
-
-  	if (m_changeGlowColor)
-		globedPlayer->setGlowOutline(color);
 }

@@ -26,6 +26,11 @@ class $modify(PlayLayer) {
     	globalFirstTime = true;
     	PlayLayer::onExit();
   	}
+	
+	void resetLevel() {
+		PlayLayer::resetLevel();
+		globalFirstTime = true;
+	}
 
   	bool init(GJGameLevel* p0, bool p1, bool p2) {
     	if (!PlayLayer::init(p0, p1, p2))
@@ -34,7 +39,9 @@ class $modify(PlayLayer) {
     	return true;
   	}
 
+
 	void postUpdate(float p0) {
+		PlayLayer::postUpdate(p0);
 
     	static bool executeCode = true;
     
@@ -56,7 +63,6 @@ class $modify(PlayLayer) {
 
     	executeCode = !executeCode;
     
-		PlayLayer::postUpdate(p0);
 	}
 };
 
@@ -64,15 +70,15 @@ class $modify(LevelEditorLayer) {
 	Ref<AmbientColor> m_ambientChanger;
 
 	void postUpdate(float p0) {
+		LevelEditorLayer::postUpdate(p0);
 
 		static bool executeCode = true;
 		
 		std::chrono::milliseconds interval(globalInterval);
 		
 		auto currentTime = std::chrono::steady_clock::now();
-		
-		static auto lastExecutionTime = currentTime;
 			
+		static auto lastExecutionTime = currentTime;
 		auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
 
 		m_fields->m_ambientChanger = AmbientColor::create(this);
@@ -86,7 +92,6 @@ class $modify(LevelEditorLayer) {
 		}
 		
 		executeCode = !executeCode;
-		LevelEditorLayer::postUpdate(p0);
 	}
 };
 
