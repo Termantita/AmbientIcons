@@ -3,6 +3,7 @@
 ## v1.4.4
 
 - <cy>Added</c> bg picker feature to the editor (thanks Cvolton :3)
+- <cy>Updated</c> to Geode Beta 22
 
 ---
 
