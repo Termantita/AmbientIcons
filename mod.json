@@ -119,7 +119,7 @@
 	{
 		"id": "geode.node-ids",
 		"importance": "required",
-		"version": "*"
+		"version": ">=1.8.0"
 	}
 	],
 

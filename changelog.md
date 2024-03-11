@@ -4,6 +4,7 @@
 
 - <cy>Added</c> bg picker feature to the editor (thanks Cvolton :3)
 - <cy>Updated</c> to Geode Beta 22
+- <cy>Added:</c> Now it requires Node IDs >=v1.8.0
 
 ---
 
