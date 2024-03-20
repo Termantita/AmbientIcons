@@ -51,8 +51,19 @@ ccColor3B AmbientColor::getScreenColor() {
   	auto size = CCDirector::sharedDirector()->getWinSize();
 
   	auto oldPos = m_layer->getPosition();
-  
-  	m_layer->setPosition({-size.width * m_pickPos.x, -size.height * m_pickPos.y});
+	
+	m_layer->setPositionX(-size.width * m_pickPos.x);
+	if (m_playerFollowPicker) {
+		auto player = m_layer->m_player1;
+		auto playerPos = player->getPosition();
+		log::info("Player pos: ({} ; {})", playerPos.x, playerPos.y);
+		auto temp = playerPos.y / 100;
+		m_layer->setPositionY(temp);
+		log::info("Follow picker Y axis: {}", temp);
+	} else {
+  		m_layer->setPositionY(-size.height * m_pickPos.y);
+	}
+
   
 	auto parent = m_layer->getChildByIDRecursive("main-node");
 	CCSprite* bgSprite = nullptr;
@@ -60,6 +71,7 @@ ccColor3B AmbientColor::getScreenColor() {
 		bgSprite = getChildOfType<CCSprite>(parent, 0);
 	} else {
 		bgSprite = static_cast<CCSprite* >(parent->getChildByID("background"));
+
 	}
 	
 	ccColor3B color = getRenderColor(bgSprite);
