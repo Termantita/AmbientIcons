@@ -1,5 +1,11 @@
 # Ambient Icons Changelog
 
+## v1.5.0
+
+- <cy>Added</c> player following picker
+
+---
+
 ## v1.4.4
 
 - <cy>Added</c> bg picker feature to the editor (thanks Cvolton :3)
