@@ -21,8 +21,9 @@ protected:
       	m_changeGlowColor = Mod::get()->getSettingValue<bool>("change-glow-color");
 
       	m_pickBGColor = Mod::get()->getSettingValue<bool>("pick-bg-color");
-			m_changeMethodWhenBlack = Mod::get()->getSettingValue<bool>("change-method-when-black");
-        
+		m_changeMethodWhenBlack = Mod::get()->getSettingValue<bool>("change-method-when-black");
+		m_playerFollowPicker = Mod::get()->getSettingValue<bool>("player-follow-picker");
+
         return true;
     }
 private:
@@ -42,10 +43,12 @@ private:
 	bool m_pickBGColor;
 	bool m_changeMethodWhenBlack;
 
+	bool m_playerFollowPicker;
+
 	ccColor3B getRenderColor(CCSprite* bgSprite);
 public:
     static AmbientColor* create(GJBaseGameLayer* layer) {
-        auto ret = new AmbientColor();
+    	auto ret = new AmbientColor();
         if (ret && ret->init(layer)) {
             ret->autorelease();
             return ret;
