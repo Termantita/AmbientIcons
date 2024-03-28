@@ -28,6 +28,7 @@ protected:
     }
 private:
 	GJBaseGameLayer* m_layer;
+
 	CCPoint m_pickPos;
 
 	PlayerObject* m_player1;
@@ -63,5 +64,17 @@ public:
 
 	void setPickBGColor() {
 		m_pickBGColor = Mod::get()->getSettingValue<bool>("pick-bg-color");
+	}
+
+	double getRenderXPos() {
+		return Mod::get()->getSettingValue<double>("render-x-pos");
+	}
+	
+	double getRenderYPos() {
+		return Mod::get()->getSettingValue<double>("render-y-pos");
+	}
+
+	double getPlayerFollowOffset() {
+		return Mod::get()->getSettingValue<double>("player-follow-offset");
 	}
 };
