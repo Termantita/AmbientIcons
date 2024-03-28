@@ -44,7 +44,7 @@
 		},
 		"render-x-pos": {
 			"name": "Set X",
-			"description": "Set where in the X axis pick the colors.",
+			"description": "Set where in the X axis pick the colors. <co>0.4 may conflict with player follow picker</c>",
 			"type": "float",
 			"default": 0,
 			"min": 0,
@@ -57,7 +57,7 @@
 		},
 		"render-y-pos": {
 			"name": "Set Y",
-			"description": "Set where in the Y axis pick the colors\n<co>Overriden by Y offset when player follow is enabled</c>.",
+			"description": "Set where in the Y axis pick the colors\n<co>Overriden by Y offset when player follow is enabled</c>",
 			"type": "float",
 			"default": 0.5,
 			"min": 0,
@@ -70,9 +70,9 @@
 		},
 		"player-follow-picker": {
 			"name": "Follow player",
-			"description": "The color picker follows the player\n<co>Useful when the level has a custom BG</c>",
+			"description": "The color picker follows the player\n<co>Useful when the level has a custom BG, doesn't work with dual</c>",
 			"type": "bool",
-			"default": true
+			"default": false
 		},
 		"player-follow-offset": {
 			"name": "Follow player Y offset",
@@ -103,17 +103,17 @@
 			"name": "Pick color from BG",
 			"description": "Picks the background color instead of picking the screen color.\n<co>Having this option disabled can cause flashing lights. Doesn't change on custom BG</c>",
 			"type": "bool",
-			"default": false
+			"default": true
 		},
 		"change-method-when-black": {
 			"name": "Change method on black",
-			"description": "Change the pick color method (BG picker to non-follow screen picker) if the color picked in the BG is black (0,0,0)",
+			"description": "Change the pick color method (BG picker to non-follow screen picker) if the color picked in the BG is black (0,0,0).",
 			"type": "bool",
 			"default": true
 		},
 		"change-to-follow-method-when-black": {
 			"name": "Change method to follow",
-			"description": "Change the pick color method (BG picker to screen player follow picker) if the color picked in the BG is black (0,0,0)",
+			"description": "Change the pick color method (BG picker to screen player follow picker) if the color picked in the BG is black (0,0,0).",
 			"type": "bool",
 			"default": true
 		},
