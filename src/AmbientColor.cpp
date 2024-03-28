@@ -43,14 +43,10 @@ ccColor3B AmbientColor::getScreenColor() {
 	if (m_playerFollowPicker && !m_pickBGColor) { // Follow player picker
 		auto player = m_layer->m_player1;
 		auto playerPos = player->getRealPosition();
-		// auto playerPosOffset = playerPos.y + (getPlayerFollowOffset() * playerPos.y);
-		auto screenPlayerPosY = playerPos.y / size.height;
-		if (screenPlayerPosY > 1.f)
-			screenPlayerPosY = 1.f;
-		
-		log::debug("Player pos: ({} ; {})", playerPos.x, playerPos.y);
+		auto playerPosOffset = playerPos.y * (getPlayerFollowOffset() + 1.f);
+		auto screenPlayerPosY = playerPosOffset / size.height < 1.f ? playerPosOffset / size.height : 1.f; // Convert player level pos to player screen pos 0-1.f (related to level -> related to screen)
 
-		float temp = -(screenPlayerPosY + getPlayerFollowOffset()) * size.height; // FIXME: it goes black at 1.f of screen or less
+		float temp = -screenPlayerPosY * size.height;
 		m_layer->setPositionY(temp);
 		log::debug("Follow picker Y axis: {}", temp);
 	} else {
@@ -72,7 +68,7 @@ ccColor3B AmbientColor::getScreenColor() {
 		color = getRenderColor(bgSprite);
 	}
 
-	m_layer->setPosition(oldPos);
+	// m_layer->setPosition(oldPos);
 
 	return color;
 }
