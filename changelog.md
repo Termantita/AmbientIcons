@@ -2,7 +2,7 @@
 
 ## v1.5.0
 
-- <cy>Added</c> player following picker
+- <cy>Added</c> player follow color picker
 - <cy>Added</c> *Follow player* option
 - <cy>Added</c> *Follow player Y offset* option (overrides *Set Y* option)
 
@@ -12,7 +12,7 @@
 
 - <cy>Added</c> bg picker feature to the editor (thanks Cvolton :3)
 - <cy>Updated</c> to Geode Beta 22
-- <cy>Added</c> - Now it requires Node IDs >=v1.8.0
+- <cy>Bumped</c> `Node IDs` requirement version to >=v1.8.0
 
 ---
 
