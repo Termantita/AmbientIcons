@@ -33,7 +33,7 @@
 		},
 		"change-wave-trail": {
 			"name": "Change wave trail color",
-			"description": "<co>Having ambient glow enabled makes this option useless</c>",
+			"description": "<co>Having ambient glow enabled makes this option useless.</c>",
 			"type": "bool",
 			"default": true
 		},
@@ -44,9 +44,9 @@
 		},
 		"render-x-pos": {
 			"name": "Set X",
-			"description": "Set where in the X axis pick the colors. <co>0.4 may conflict with player follow picker</c>",
+			"description": "Set where in the X axis pick the colors. <co>0.4 may conflict with player follow picker.</c>",
 			"type": "float",
-			"default": 0,
+			"default": 0.3,
 			"min": 0,
 			"max": 1,
 			"control": {
@@ -57,7 +57,7 @@
 		},
 		"render-y-pos": {
 			"name": "Set Y",
-			"description": "Set where in the Y axis pick the colors\n<co>Overriden by Y offset when player follow is enabled</c>",
+			"description": "Set where in the Y axis pick the colors\n<co>Overriden by Y offset when player follow is enabled.</c>",
 			"type": "float",
 			"default": 0.5,
 			"min": 0,
@@ -70,7 +70,7 @@
 		},
 		"player-follow-picker": {
 			"name": "Follow player",
-			"description": "The color picker follows the player\n<co>Useful when the level has a custom BG, doesn't work with dual</c>",
+			"description": "The color picker follows the player\n<co>Useful when the level has a custom BG, doesn't work with dual.</c>",
 			"type": "bool",
 			"default": false
 		},
@@ -89,7 +89,7 @@
 		},
 		"update-time": {
 			"name": "Update time (ms)",
-			"description": "<co>Increase the value if there are too many flashing colors or having fps drops</c>",
+			"description": "<co>Increase the value if there are too many flashing colors or having fps drops.</c>",
 			"type": "int",
 			"default": 0,
 			"min": 0,
@@ -119,7 +119,7 @@
 		},
 		"player-flash": {
 			"name": "Show Player Flash",
-			"description": "Show player flashes in dash orbs, spider orbs, teleports and spider dashes.\n<co>It may cause update color bugs when is enabled without 0ms update time</c>",
+			"description": "Show player flashes in dash orbs, spider orbs, teleports and spider dashes.\n<co>It may cause update color bugs when is enabled without 0ms update time.</c>",
 			"type": "bool",
 			"default": false
 		}
