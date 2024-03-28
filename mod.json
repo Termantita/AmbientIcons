@@ -1,5 +1,5 @@
 {
-	"geode": "2.0.0-beta.22",
+	"geode": "2.0.0",
 	"gd": {
 		"win": "2.204",
 		"android": "2.205"
@@ -79,13 +79,30 @@
 			"type": "bool",
 			"default": true
 		},
+		"player-follow-offset": {
+			"name": "Follow player Y offset",
+			"description": "",
+			"type": "float",
+			"default": 0,
+			"min": -0.3,
+			"max": 0.3,
+			"control": {
+				"slider-step": 0.1,
+				"slider": true,
+				"arrows": false
+			}
+		},
 		"update-time": {
 			"name": "Update time (ms)",
 			"description": "<co>Increase the value if there are too many flashing colors or having fps drops when using Globed</c>",
 			"type": "int",
 			"default": 0,
 			"min": 0,
-			"max": 1000
+			"max": 1000,
+			"control": {
+				"slider": true,
+				"arrows": false
+			}
 		},
 		"pick-bg-color": {
 			"name": "Pick color from BG",
