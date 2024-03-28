@@ -20,7 +20,7 @@ $execute {
 }
 
 bool globalFirstTime = true;
-class $modify(PlayLayer) {
+struct AmbientPlayLayer : Modify<AmbientPlayLayer, PlayLayer> {
 	Ref<AmbientColor> m_ambientChanger;
   	void onExit() {
     	globalFirstTime = true;
@@ -66,7 +66,7 @@ class $modify(PlayLayer) {
 	}
 };
 
-class $modify(LevelEditorLayer) {
+struct AmbientLevelEditorLayer : Modify<AmbientLevelEditorLayer, LevelEditorLayer> {
 	Ref<AmbientColor> m_ambientChanger;
 
 	bool init(GJGameLevel* p0, bool p1) {
