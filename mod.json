@@ -4,7 +4,7 @@
 		"win": "2.204",
 		"android": "2.205"
 	},
-	"version": "v1.5.0-beta",
+	"version": "v1.5.0",
 	"id": "terma.ambienticons",
 	"name": "Ambient Icons",
 	"developer": "Terma",
@@ -75,7 +75,7 @@
 		},
 		"player-follow-picker": {
 			"name": "Follow player",
-			"description": "",
+			"description": "The color picker follows the player (useful when the level have a custom BG)",
 			"type": "bool",
 			"default": true
 		},
@@ -83,8 +83,8 @@
 			"name": "Follow player Y offset",
 			"description": "",
 			"type": "float",
-			"default": 0,
-			"min": -0.3,
+			"default": 0.1,
+			"min": 0,
 			"max": 0.3,
 			"control": {
 				"slider-step": 0.1,
@@ -112,10 +112,11 @@
 		},
 		"change-method-when-black": {
 			"name": "Change pick color method",
-			"description": "Change the pick color method (bg picker to screen picker) if the color picked is black (0,0,0)",
+			"description": "Change the pick color method (bg picker to screen picker) if the color picked in BG is black (0,0,0)",
 			"type": "bool",
 			"default": true
 		},
+
 		"player-flash": {
 			"name": "Show Player Flash",
 			"description": "Show player flashes in dash orbs, spider orbs, teleports and spider dashes.\n<co>It may cause update color bugs when is enabled without 0ms update time</c>",
