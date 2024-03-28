@@ -4,38 +4,24 @@
 
 #include "AmbientColor.hpp"
 
-double globalXPos = Mod::get()->getSettingValue<double>("render-x-pos");
-double globalYPos = Mod::get()->getSettingValue<double>("render-y-pos");
-
-$execute {
-	listenForSettingChanges("render-x-pos", +[](double value) {
-		globalXPos = value;
-  	});
-  
-  	listenForSettingChanges("render-y-pos", +[](double value) {
-		globalYPos = value;
-  	});
-}
-
-ccColor3B AmbientColor::getRenderColor(CCSprite* bgSprite) {
+ccColor3B AmbientColor::getRenderColor(CCSprite *bgSprite) {
 	auto renderTexture = CCRenderTexture::create(1, 1);
 
 	renderTexture->begin(); // Rendering block
-  
+
 	if (m_pickBGColor && bgSprite)
 		bgSprite->visit();
 	else
 		m_layer->visit();
-  
-  	renderTexture->end(); // Rendering block
 
+	renderTexture->end(); // Rendering block
 
-  	auto img = renderTexture->newCCImage();
-  	auto data = img->getData();
-  	ccColor3B color = ccColor3B(data[0], data[1], data[2]);
-	
-  	delete img;
-  	renderTexture->removeMeAndCleanup();
+	auto img = renderTexture->newCCImage();
+	auto data = img->getData();
+	ccColor3B color = ccColor3B(data[0], data[1], data[2]);
+
+	delete img;
+	renderTexture->removeMeAndCleanup();
 
 	setPickBGColor();
 
@@ -43,76 +29,81 @@ ccColor3B AmbientColor::getRenderColor(CCSprite* bgSprite) {
 }
 
 ccColor3B AmbientColor::getScreenColor() {
-	if (!(m_changeMainColor || m_changeSecondaryColor || m_changeMainColorDual || m_changeSecondaryColorDual || m_changeWaveTrail || m_changeGlowColor))
+	if (!(m_changeMainColor || m_changeSecondaryColor || m_changeMainColorDual ||
+			m_changeSecondaryColorDual || m_changeWaveTrail || m_changeGlowColor))
 		return ccColor3B(0.f, 0.f, 0.f);
 
-  	m_pickPos = CCPoint(globalXPos, globalYPos);
+	m_pickPos = CCPoint(getRenderXPos(), getRenderYPos());
 
-  	auto size = CCDirector::sharedDirector()->getWinSize();
+	auto size = CCDirector::sharedDirector()->getWinSize();
 
-  	auto oldPos = m_layer->getPosition();
-	
+	auto oldPos = m_layer->getPosition();
+
 	m_layer->setPositionX(-size.width * m_pickPos.x);
-	if (m_playerFollowPicker) {
+	if (m_playerFollowPicker && !m_pickBGColor) { // Follow player picker
 		auto player = m_layer->m_player1;
-		auto playerPos = player->getPosition();
-		log::info("Player pos: ({} ; {})", playerPos.x, playerPos.y);
-		auto temp = playerPos.y / 100;
+		auto playerPos = player->getRealPosition();
+		// auto playerPosOffset = playerPos.y + (getPlayerFollowOffset() * playerPos.y);
+		auto screenPlayerPosY = playerPos.y / size.height;
+		if (screenPlayerPosY > 1.f)
+			screenPlayerPosY = 1.f;
+		
+		log::debug("Player pos: ({} ; {})", playerPos.x, playerPos.y);
+
+		float temp = -(screenPlayerPosY + getPlayerFollowOffset()) * size.height; // FIXME: it goes black at 1.f of screen or less
 		m_layer->setPositionY(temp);
-		log::info("Follow picker Y axis: {}", temp);
+		log::debug("Follow picker Y axis: {}", temp);
 	} else {
-  		m_layer->setPositionY(-size.height * m_pickPos.y);
+		m_layer->setPositionY(-size.height * m_pickPos.y); // Normal position picker
 	}
 
-  
 	auto parent = m_layer->getChildByIDRecursive("main-node");
-	CCSprite* bgSprite = nullptr;
-	if (typeinfo_cast<PlayLayer* >(m_layer)) {
+	CCSprite *bgSprite = nullptr;
+	if (typeinfo_cast<PlayLayer *>(m_layer)) {
 		bgSprite = getChildOfType<CCSprite>(parent, 0);
 	} else {
-		bgSprite = static_cast<CCSprite* >(parent->getChildByID("background"));
-
+		bgSprite = static_cast<CCSprite *>(parent->getChildByID("background"));
 	}
-	
+
 	ccColor3B color = getRenderColor(bgSprite);
-  	
+
 	if (color == ccColor3B(0, 0, 0) && bgSprite && m_changeMethodWhenBlack) {
 		m_pickBGColor = false;
 		color = getRenderColor(bgSprite);
 	}
-	
+
 	m_layer->setPosition(oldPos);
 
-  	return color;
+	return color;
 }
 
 void AmbientColor::setIconColor(ccColor3B color) {
-  	if (m_changeMainColor)
+	if (m_changeMainColor)
 		m_player1->setColor(color);
 
-  	if (m_changeSecondaryColor)
+	if (m_changeSecondaryColor)
 		m_player1->setSecondColor(color);
 
-  	if (m_changeMainColorDual)
+	if (m_changeMainColorDual)
 		m_player2->setColor(color);
 
-  	if (m_changeSecondaryColorDual)
+	if (m_changeSecondaryColorDual)
 		m_player2->setSecondColor(color);
 
-  	if (m_changeWaveTrail) {
+	if (m_changeWaveTrail) {
 		if (m_player1->m_isDart) {
-	  		m_player1->m_waveTrail->setColor(color);
+		m_player1->m_waveTrail->setColor(color);
 		}
 		if (m_player2->m_isDart) {
-	  		m_player2->m_waveTrail->setColor(color);
+		m_player2->m_waveTrail->setColor(color);
 		}
-  	}
+	}
 
-  	if (m_changeGlowColor) {
+	if (m_changeGlowColor) {
 		m_player1->m_glowColor = color;
 		m_player1->updateGlowColor();
 
 		m_player2->m_glowColor = color;
 		m_player2->updateGlowColor();
-  	}
+	}
 }
