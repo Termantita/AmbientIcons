@@ -4,7 +4,8 @@
 
 - <cy>Added</c> player follow color picker
 - <cy>Added</c> *Follow player* option
-- <cy>Added</c> *Follow player Y offset* option (overrides *Set Y* option)
+- <cy>Added</c> *Follow player Y offset* option (always overrides *Set Y* option)
+- <cy>Added</c> *Change method to follow* option
 
 ---
 
@@ -40,7 +41,7 @@
 ## v1.4.0
 
 - <cy>Added</c> integration with Globed Progressbar self-icon
-- <cy>Added</c> an option for picking the color only from the BG (big thanks to elnexreal) - Doesn't work on LevelEditorLayer (Level editor)
+- <cy>Added</c> [BG color picker] an option for picking the color only from the BG (big thanks to elnexreal) - Doesn't work on LevelEditorLayer (Level Editor)
 - <cy>Improved</c> code for better implementations
 
 ---
@@ -69,7 +70,7 @@
 
 ## v1.3.0
 
-- <cy>Added</c> Ambient Icons support on LevelEditorLayer (GD Level Editor)
+- <cy>Added</c> Ambient Icons support on LevelEditorLayer (Level Editor)
 
 ---
 
