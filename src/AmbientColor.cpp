@@ -9,7 +9,7 @@ ccColor3B AmbientColor::getRenderColor(CCSprite *bgSprite) {
 
 	renderTexture->begin(); // Rendering block
 
-	if (m_pickBGColor && bgSprite)
+	if (m_BGColorPicker && bgSprite)
 		bgSprite->visit();
 	else
 		m_layer->visit();
@@ -23,7 +23,8 @@ ccColor3B AmbientColor::getRenderColor(CCSprite *bgSprite) {
 	delete img;
 	renderTexture->removeMeAndCleanup();
 
-	setPickBGColor();
+	setBGColorPicker();
+	setPlayerFollowColorPicker();
 
 	return color;
 }
@@ -40,17 +41,15 @@ ccColor3B AmbientColor::getScreenColor() {
 	auto oldPos = m_layer->getPosition();
 
 	m_layer->setPositionX(-size.width * m_pickPos.x);
-	if (m_playerFollowPicker && !m_pickBGColor) { // Follow player picker
+	if (m_playerFollowPicker && !m_BGColorPicker) { // Follow player picker
 		auto player = m_layer->m_player1;
 		auto playerPos = player->getRealPosition();
 		auto playerPosOffset = playerPos.y * (getPlayerFollowOffset() + 1.f);
 		auto screenPlayerPosY = playerPosOffset / size.height < 1.f ? playerPosOffset / size.height : 1.f; // Convert player level pos to player screen pos 0-1.f (related to level -> related to screen)
 
-		float temp = -screenPlayerPosY * size.height;
-		m_layer->setPositionY(temp);
-		log::debug("Follow picker Y axis: {}", temp);
+		m_layer->setPositionY(-screenPlayerPosY * size.height);
 	} else {
-		m_layer->setPositionY(-size.height * m_pickPos.y); // Normal position picker
+		m_layer->setPositionY(-size.height * m_pickPos.y); // Normal/fixed position picker
 	}
 
 	auto parent = m_layer->getChildByIDRecursive("main-node");
@@ -63,12 +62,20 @@ ccColor3B AmbientColor::getScreenColor() {
 
 	ccColor3B color = getRenderColor(bgSprite);
 
-	if (color == ccColor3B(0, 0, 0) && bgSprite && m_changeMethodWhenBlack) {
-		m_pickBGColor = false;
-		color = getRenderColor(bgSprite);
+	if (color == ccColor3B(0, 0, 0) && m_changeMethodWhenBlack) {
+
+		if (bgSprite) {
+			m_BGColorPicker = false;
+			color = getRenderColor(bgSprite);
+		}		
+		
+		if (m_changeMethodToPlayerFollowWhenBlack) {
+			m_playerFollowPicker = true;
+			getScreenColor();
+		}
 	}
 
-	// m_layer->setPosition(oldPos);
+	m_layer->setPosition(oldPos);
 
 	return color;
 }
