@@ -17,4 +17,4 @@ Can cause performance issues with <cy>Globed</c>.
 ### New incoming stuff (maybe)
 
 - Add multithreading (better performance)
-- Fix player follow picker (mainly fix it for 2 Player mode)
+- Fix player follow picker (mainly for 2 Player mode)
