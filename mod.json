@@ -126,11 +126,6 @@
 	},
 	"incompatibilities": [
 		{
-			"id": "TheSillyDoggo.Cheats",
-			"version": "*",
-			"importance": "conflicting"
-		},
-		{
 			"id": "saumondeluxe.rainbow_icon",
 			"version": "*",
 			"importance": "conflicting"
