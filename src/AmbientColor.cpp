@@ -1,7 +1,3 @@
-#include <Geode/Geode.hpp>
-
-#include <Geode/loader/SettingEvent.hpp>
-
 #include "AmbientColor.hpp"
 
 ccColor3B AmbientColor::getRenderColor(CCSprite *bgSprite) {
