@@ -1,10 +1,10 @@
 {
-	"geode": "2.0.0-beta.25",
+	"geode": "3.0.0-alpha.1",
 	"gd": {
-		"win": "2.204",
-		"android": "2.205"
+		"win": "*",
+		"android": "*"
 	},
-	"version": "v1.5.1",
+	"version": "v1.6.0",
 	"id": "terma.ambienticons",
 	"name": "Ambient Icons",
 	"developer": "Terma",
@@ -113,7 +113,7 @@
 		},
 		"change-to-follow-method-when-black": {
 			"name": "Change method to follow",
-			"description": "Change the pick color method (BG picker to screen player follow picker) if the color picked in the BG is black (0,0,0).",
+			"description": "Change the pick color method (BG picker to screen player follow picker) if the color picked in the BG is black (0,0,0).\n<co>Overwrites above option</c>",
 			"type": "bool",
 			"default": true
 		},
@@ -125,11 +125,6 @@
 		}
 	},
 	"incompatibilities": [
-		{
-			"id": "TheSillyDoggo.Cheats",
-			"version": "*",
-			"importance": "conflicting"
-		},
 		{
 			"id": "saumondeluxe.rainbow_icon",
 			"version": "*",
