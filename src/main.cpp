@@ -14,14 +14,17 @@ using namespace geode::prelude;
 int globalInterval = Mod::get()->getSettingValue<int64_t>("update-time");
 
 $execute {
-  listenForSettingChanges("update-time", +[](int64_t value) {
+  	listenForSettingChanges("update-time", +[](int64_t value) {
 		globalInterval = value;
-  });
+  	});
 }
 
 bool globalFirstTime = true;
 struct AmbientPlayLayer : Modify<AmbientPlayLayer, PlayLayer> {
-	Ref<AmbientColor> m_ambientChanger;
+	struct Fields {
+		Ref<AmbientColor> m_ambientChanger;
+	};
+	
   	void onExit() {
     	globalFirstTime = true;
     	PlayLayer::onExit();
@@ -67,7 +70,9 @@ struct AmbientPlayLayer : Modify<AmbientPlayLayer, PlayLayer> {
 };
 
 struct AmbientLevelEditorLayer : Modify<AmbientLevelEditorLayer, LevelEditorLayer> {
-	Ref<AmbientColor> m_ambientChanger;
+	struct Fields {
+		Ref<AmbientColor> m_ambientChanger;
+	};
 
 	bool init(GJGameLevel* p0, bool p1) {
 		if (!LevelEditorLayer::init(p0, p1))
@@ -104,6 +109,6 @@ struct AmbientLevelEditorLayer : Modify<AmbientLevelEditorLayer, LevelEditorLaye
 class $modify(PlayerObject) {
 	void flashPlayer(float p0, float p1, ccColor3B mainColor, ccColor3B secondColor) {
 		if (Mod::get()->getSettingValue<bool>("player-flash"))
-		PlayerObject::flashPlayer(p0, p1, mainColor, secondColor);
+			PlayerObject::flashPlayer(p0, p1, mainColor, secondColor);
 	}
 };
