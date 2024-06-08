@@ -1,5 +1,19 @@
 # Ambient Icons Changelog
 
+## v1.6.0
+
+- <cy>Updated</c> to Geometry Dash 2.206
+- <cy>Updated</c> to Geode 3.0.0-alpha.1
+
+---
+
+## v1.5.1
+
+- <cy>Removed</c> QOL Mod as a conflicting incompatibility
+- <cy>Updated</c> to Beta 27
+
+---
+
 ## v1.5.0
 
 - <cy>Added</c> player follow color picker
