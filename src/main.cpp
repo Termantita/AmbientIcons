@@ -105,10 +105,3 @@ struct AmbientLevelEditorLayer : Modify<AmbientLevelEditorLayer, LevelEditorLaye
 		executeCode = !executeCode;
 	}
 };
-
-class $modify(PlayerObject) {
-	void flashPlayer(float p0, float p1, ccColor3B mainColor, ccColor3B secondColor) {
-		if (Mod::get()->getSettingValue<bool>("player-flash"))
-			PlayerObject::flashPlayer(p0, p1, mainColor, secondColor);
-	}
-};
