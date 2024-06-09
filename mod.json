@@ -4,7 +4,7 @@
 		"win": "*",
 		"android": "*"
 	},
-	"version": "v1.6.0",
+	"version": "v1.6.0-beta",
 	"id": "terma.ambienticons",
 	"name": "Ambient Icons",
 	"developer": "Terma",
@@ -116,12 +116,6 @@
 			"description": "Change the pick color method (BG picker to screen player follow picker) if the color picked in the BG is black (0,0,0).\n<co>Overwrites above option</c>",
 			"type": "bool",
 			"default": true
-		},
-		"player-flash": {
-			"name": "Show Player Flash",
-			"description": "Show player flashes in dash orbs, spider orbs, teleports and spider dashes.\n<co>It may cause update color bugs when is enabled without 0ms update time.</c>",
-			"type": "bool",
-			"default": false
 		}
 	},
 	"incompatibilities": [
