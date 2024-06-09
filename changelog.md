@@ -1,9 +1,11 @@
 # Ambient Icons Changelog
 
-## v1.6.0
+## v1.6.0-beta
 
-- <cy>Updated</c> to Geometry Dash 2.206
+- <cy>Ported</c> to 2.206
 - <cy>Updated</c> to Geode 3.0.0-alpha.1
+- <cy>Removed</c> player flash feature toggle option (bindings issues)
+- <cy>Added</c> new mod icon/logo by Dasshu :3
 
 ---
 
