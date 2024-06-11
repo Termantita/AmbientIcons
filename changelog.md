@@ -1,6 +1,12 @@
 # Ambient Icons Changelog
 
-## v1.6.0-beta
+## v1.6.2-beta
+
+- <cy>Updated</c> to Geode 3.0.0-alpha.2 (yes it's only this)
+
+---
+
+## v1.6.0/1.6.1-beta
 
 - <cy>Ported</c> to 2.206
 - <cy>Updated</c> to Geode 3.0.0-alpha.1
