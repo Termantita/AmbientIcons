@@ -18,7 +18,7 @@ Player flash option was REMOVED for now. Use 0ms update time for similar results
 Featured with different pickers:
 - **Screen picker** - Adjust where to pick the colors in the mod's settings (X and Y axes)
 - **BG color picker** - Pick the color from the BG without objects affecting the picked color
-- **Player follow color picker** - Autoadjust by following the player where to pick the colors
+- **Player follow color picker** - Autoadjust by following the player where to pick the colors (have some issues)
 
 ---
 
