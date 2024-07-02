@@ -9,7 +9,7 @@ Windows & Android (no MacOS reason is [here](https://github.com/Termantita/Ambie
 ### Fully customizable
 TODO: Add images
 
-## With different color pickers/methods: 
+### With different color pickers/methods: 
 - **From BG** (without objects affecting the picked color)
 - **From the screen** (classic picker)
 - **By following the player** (doesn't work on 2 player mode)
@@ -25,7 +25,7 @@ TODO: Add images
 
 --
 
-## Upcoming features
+### Upcoming features
 - [] Invert colors
 - [] Adapt to cocos timeouts
 - [] Smooth change between picks
