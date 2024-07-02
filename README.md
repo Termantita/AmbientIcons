@@ -16,7 +16,7 @@ TODO: Add images
 
 ---
 
-## Credits
+### Credits
 
 - **Dasshu/Jay** | New icon/logo design
 
