@@ -18,10 +18,9 @@ TODO: Add images
 
 ## Credits
 
-- *Dasshu/Jay* | New icon/logo design
-
-- - [Twitter](https://x.com/DasshuGames)
-- - [Discord](https://discord.gg/CSX3RW7FXq)
+- **Dasshu/Jay** | New icon/logo design
+  - [Twitter](https://x.com/DasshuGames)
+  - [Discord](https://discord.gg/CSX3RW7FXq)
 
 ---
 
