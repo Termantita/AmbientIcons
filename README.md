@@ -23,7 +23,7 @@ TODO: Add images
 - [Twitter](https://x.com/DasshuGames)
 - [Discord](https://discord.gg/CSX3RW7FXq)
 
---
+---
 
 ### Upcoming features
 - [] Invert colors
