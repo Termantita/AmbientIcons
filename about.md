@@ -28,10 +28,3 @@ Featured with different pickers:
 
 - [Twitter](https://x.com/DasshuGames)
 - [Discord](https://discord.gg/CSX3RW7FXq)
-
----
-
-### New incoming stuff (maybe)
-
-- Add multithreading (better performance)
-- Fix player follow picker (mainly for 2 Player mode)
