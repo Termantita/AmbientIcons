@@ -7,7 +7,7 @@ Windows & Android (no MacOS reason is [here](https://github.com/Termantita/Ambie
 
 ---
 ### Fully customizable
-![https://cdn.discordapp.com/attachments/1240845310604087298/1240845471396921436/20240516225559_1.jpg?ex=668558a6&is=66840726&hm=05c0985d369f3376105361fc9c85fb965ec8eee3788c242704329280b72ae1be&]
+TODO: Add images
 
 ## With different color pickers/methods: 
 - **From BG** (without objects affecting the picked color)
