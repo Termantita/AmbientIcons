@@ -30,6 +30,6 @@ TODO: Add images
 - [ ] Adapt to cocos timeouts
 - [ ] Smooth change between picks
 - [ ] Some kind of environmental glow maybe
-- [ ] Rewrite follow player picker
+- [ ] Rewrite ~~follow player picker~~ the whole mod
 
 > Sorry for the inactivity! i didnt have ideas and im busy with some projects
