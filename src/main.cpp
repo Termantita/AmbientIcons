@@ -5,8 +5,6 @@
 #include <Geode/modify/LevelEditorLayer.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
 
-#include <Geode/loader/SettingEvent.hpp>
-
 #include "AmbientColor.hpp"
 
 using namespace geode::prelude;
@@ -58,7 +56,8 @@ struct AmbientPlayLayer : Modify<AmbientPlayLayer, PlayLayer> {
     
     	if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
 			m_fields->m_ambientChanger->setIconColor(m_fields->m_ambientChanger->getScreenColor());
-      		lastExecutionTime = currentTime;
+      		
+			lastExecutionTime = currentTime;
 
 			if (globalFirstTime)
 				globalFirstTime = false;

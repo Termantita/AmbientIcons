@@ -38,9 +38,11 @@ ccColor3B AmbientColor::getScreenColor() {
 
 	m_layer->setPositionX(-size.width * m_pickPos.x);
 	if (m_playerFollowPicker && m_player2->getPositionX() == 0 && m_player2->getPositionY() == 0) { // Follow player picker
-		auto playerPos = m_player1->getRealPosition();
+		auto playerPos = m_player1->getPosition();
 		auto playerPosOffset = playerPos.y * (getPlayerFollowOffset() + 1.f);
-		auto screenPlayerPosY = playerPosOffset / size.height < 1.f ? playerPosOffset / size.height : 1.f; // Convert player level pos to player screen pos 0-1.f (related to level -> related to screen)
+		
+		// Convert player level pos to player screen pos 0-1.f (related to level -> related to screen)
+		auto screenPlayerPosY = playerPosOffset / size.height < 1.f ? playerPosOffset / size.height : 1.f; 
 
 		m_layer->setPositionY(-screenPlayerPosY * size.height);
 	} else {
@@ -48,14 +50,11 @@ ccColor3B AmbientColor::getScreenColor() {
 	}
 
 	auto parent = m_layer->getChildByIDRecursive("main-node");
-	CCSprite *bgSprite = nullptr;
-	if (typeinfo_cast<PlayLayer *>(m_layer)) {
-		bgSprite = getChildOfType<CCSprite>(parent, 0);
-	} else {
-		bgSprite = static_cast<CCSprite *>(parent->getChildByID("background"));
-	}
+	auto bgSprite = static_cast<CCSprite *>(parent->getChildByID("background"));
+
 
 	ccColor3B color = getRenderColor(bgSprite);
+
 
 	if (color == ccColor3B(0, 0, 0) && m_changeMethodWhenBlack) {
 
