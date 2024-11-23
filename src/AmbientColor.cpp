@@ -14,7 +14,7 @@ ccColor3B AmbientColor::getRenderColor(CCSprite *bgSprite) {
 
 	auto img = renderTexture->newCCImage();
 	auto data = img->getData();
-	ccColor3B color = ccColor3B({data[0], data[1], data[2]});
+	ccColor3B color = ccColor3B{data[0], data[1], data[2]};
 
 	delete img;
 	renderTexture->removeMeAndCleanup();
@@ -28,7 +28,7 @@ ccColor3B AmbientColor::getRenderColor(CCSprite *bgSprite) {
 ccColor3B AmbientColor::getScreenColor() {
 	if (!(m_changeMainColor || m_changeSecondaryColor || m_changeMainColorDual ||
 		m_changeSecondaryColorDual || m_changeWaveTrail || m_changeGlowColor))
-		return ccColor3B({0, 0, 0});
+		return ccColor3B{0, 0, 0};
 
 	m_pickPos = CCPoint(getRenderXPos(), getRenderYPos());
 
@@ -56,7 +56,7 @@ ccColor3B AmbientColor::getScreenColor() {
 	ccColor3B color = getRenderColor(bgSprite);
 
 
-	if (color == ccColor3B({0, 0, 0}) && m_changeMethodWhenBlack) {
+	if (color == ccColor3B{0, 0, 0} && m_changeMethodWhenBlack) {
 
 		if (bgSprite) {
 			m_BGColorPicker = false;
