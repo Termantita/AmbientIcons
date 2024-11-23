@@ -60,7 +60,7 @@ private:
 	bool m_changeMethodToPlayerFollowWhenBlack;
 	bool m_playerFollowPicker;
 
-	_ccColor3B getRenderColor(CCSprite* bgSprite);
+	ccColor3B getRenderColor(CCSprite* bgSprite);
 
 public:
 	static AmbientColor* create(GJBaseGameLayer* layer) {
@@ -73,9 +73,9 @@ public:
 		return nullptr;
 	}
 
-	_ccColor3B getScreenColor();
-	void setIconColor(_ccColor3B color);
-	void setGlobedIconColor(_ccColor3B color);
+	ccColor3B getScreenColor();
+	void setIconColor(ccColor3B color);
+	void setGlobedIconColor(ccColor3B color);
 
 	void setBGColorPicker() {
 		m_BGColorPicker = Mod::get()->getSettingValue<bool>("bg-color-picker");
