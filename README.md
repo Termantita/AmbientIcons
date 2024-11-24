@@ -3,7 +3,7 @@
 Change the color of your icons based on the color of your screen or gd background.
 
 ## Platforms
-Windows & Android (no MacOS reason is [here](https://github.com/Termantita/AmbientIcons/issues/2))
+Windows, Android and MacOS! (thanks to Erymanthus for testing and Justin who found the binding)
 
 ---
 ### Fully customizable
