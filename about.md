@@ -9,6 +9,7 @@ Player flash option was REMOVED for now. Use 0ms update time for similar results
 ## Features
 
 - Ported to Android (<cy>opaque colors</c> issue - for some reason colors aren't like in PC)
+- Ported to MacOS (thanks Ery and Justin)
 - Ambient mode for main color, secondary color, dual color, wave trail and glow
 
 Color pickers:
