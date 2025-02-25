@@ -10,8 +10,9 @@ protected:
 
 		this->m_layer = layer;
 
-		this->m_player1 = layer->m_player1;
-		this->m_player2 = layer->m_player2;
+		// Idk why this doesn't work
+		// this->m_player1 = layer->m_player1;
+		// this->m_player2 = layer->m_player2;
 
 		// Color changers
 		m_changeMainColor = Mod::get()->getSettingValue<bool>("change-main-color");
@@ -43,8 +44,8 @@ private:
 
 	CCPoint m_pickPos;
 
-	PlayerObject* m_player1;
-	PlayerObject* m_player2;
+	// PlayerObject* m_player1;
+	// PlayerObject* m_player2;
 
 	// Color changers
 	bool m_changeMainColor;

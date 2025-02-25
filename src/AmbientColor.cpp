@@ -89,31 +89,31 @@ ccColor3B AmbientColor::getScreenColor() {
 
 void AmbientColor::setIconColor(ccColor3B color) {
 	if (m_changeMainColor)
-		m_player1->setColor(color);
+		m_layer->m_player1->setColor(color);
 
 	if (m_changeSecondaryColor)
-		m_player1->setSecondColor(color);
+		m_layer->m_player1->setSecondColor(color);
 
 	if (m_changeMainColorDual)
-		m_player2->setColor(color);
+		m_layer->m_player2->setColor(color);
 
 	if (m_changeSecondaryColorDual)
-		m_player2->setSecondColor(color);
+		m_layer->m_player2->setSecondColor(color);
 
 	if (m_changeWaveTrail) {
-		if (m_player1->m_isDart) {
-			m_player1->m_waveTrail->setColor(color);
+		if (m_layer->m_player1->m_isDart) {
+			m_layer->m_player1->m_waveTrail->setColor(color);
 		}
-		if (m_player2->m_isDart) {
-			m_player2->m_waveTrail->setColor(color);
+		if (m_layer->m_player2->m_isDart) {
+			m_layer->m_player2->m_waveTrail->setColor(color);
 		}
 	}
 
 	if (m_changeGlowColor) {
-		m_player1->m_glowColor = color;
-		m_player1->updateGlowColor();
+		m_layer->m_player1->m_glowColor = color;
+		m_layer->m_player1->updateGlowColor();
 
-		m_player2->m_glowColor = color;
-		m_player2->updateGlowColor();
+		m_layer->m_player2->m_glowColor = color;
+		m_layer->m_player2->updateGlowColor();
 	}
 }
