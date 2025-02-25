@@ -1,6 +1,10 @@
 #include "AmbientColor.hpp"
 
-ccColor3B AmbientColor::getRenderColor(CCSprite *bgSprite) {
+void AmbientColor::onChange(CCObject* sender) {
+	setIconColor(getScreenColor());
+}
+
+ccColor3B AmbientColor::getRenderColor(CCSprite* bgSprite) {
 	auto renderTexture = CCRenderTexture::create(1, 1);
 
 	renderTexture->begin(); // Rendering block
@@ -15,7 +19,7 @@ ccColor3B AmbientColor::getRenderColor(CCSprite *bgSprite) {
 	auto img = renderTexture->newCCImage();
 	auto data = img->getData();
 	ccColor3B color = ccColor3B{data[0], data[1], data[2]};
-
+	
 	delete img;
 	renderTexture->removeMeAndCleanup();
 
@@ -25,9 +29,13 @@ ccColor3B AmbientColor::getRenderColor(CCSprite *bgSprite) {
 	return color;
 }
 
+bool AmbientColor::isDisabled() {
+	return !(m_changeMainColor || m_changeSecondaryColor || m_changeMainColorDual ||
+		m_changeSecondaryColorDual || m_changeWaveTrail || m_changeGlowColor);
+}
+
 ccColor3B AmbientColor::getScreenColor() {
-	if (!(m_changeMainColor || m_changeSecondaryColor || m_changeMainColorDual ||
-		m_changeSecondaryColorDual || m_changeWaveTrail || m_changeGlowColor))
+	if (isDisabled())
 		return ccColor3B{0, 0, 0};
 
 	m_pickPos = CCPoint(getRenderXPos(), getRenderYPos());
@@ -50,24 +58,29 @@ ccColor3B AmbientColor::getScreenColor() {
 	}
 
 	auto parent = m_layer->getChildByIDRecursive("main-node");
-	auto bgSprite = static_cast<CCSprite *>(parent->getChildByID("background"));
+	CCSprite* bgSprite = nullptr;
 
+	if (parent->getChildByID("background"))
+		bgSprite = static_cast<CCSprite *>(parent->getChildByID("background"));
+	else 
+		bgSprite = parent->getChildByType<CCSprite>(0);
 
 	ccColor3B color = getRenderColor(bgSprite);
+	log::info("Color: {} {} {}", color.r, color.g, color.b);
 
 
-	if (color == ccColor3B{0, 0, 0} && m_changeMethodWhenBlack) {
+	// if (color == ccColor3B{0, 0, 0} && m_changeMethodWhenBlack) {
 
-		if (bgSprite) {
-			m_BGColorPicker = false;
-			color = getRenderColor(bgSprite);
-		}		
+	// 	if (bgSprite) {
+	// 		m_BGColorPicker = false;
+	// 		color = getRenderColor(bgSprite);
+	// 	}		
 		
-		if (m_changeMethodToPlayerFollowWhenBlack) {
-			m_playerFollowPicker = true;
-			getScreenColor();
-		}
-	}
+	// 	if (m_changeMethodToPlayerFollowWhenBlack) {
+	// 		m_playerFollowPicker = true;
+	// 		getScreenColor(); // could lead to infinite recursion
+	// 	}
+	// }
 
 	m_layer->setPosition(oldPos);
 
