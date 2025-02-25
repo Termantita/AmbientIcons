@@ -44,27 +44,13 @@ struct AmbientPlayLayer : Modify<AmbientPlayLayer, PlayLayer> {
 	void postUpdate(float p0) {
 		PlayLayer::postUpdate(p0);
 
-    	static bool executeCode = true;
-    
-    	std::chrono::milliseconds interval(globalInterval);
-    
-    	auto currentTime = std::chrono::steady_clock::now();
-		
-    	static auto lastExecutionTime = currentTime;
-    	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
+		auto seq = CCSequence::create(
+			CCDelayTime::create(globalInterval),
+			CCCallFunc::create(m_fields->m_ambientChanger, callfunc_selector(AmbientColor::onChange)),
+			nullptr
+		);
 
-    
-    	if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
-			m_fields->m_ambientChanger->setIconColor(m_fields->m_ambientChanger->getScreenColor());
-      		
-			lastExecutionTime = currentTime;
-
-			if (globalFirstTime)
-				globalFirstTime = false;
-    	}
-
-    	executeCode = !executeCode;
-    
+		this->runAction(seq);
 	}
 };
 
@@ -83,24 +69,12 @@ struct AmbientLevelEditorLayer : Modify<AmbientLevelEditorLayer, LevelEditorLaye
 	void postUpdate(float p0) {
 		LevelEditorLayer::postUpdate(p0);
 
-		static bool executeCode = true;
-		
-		std::chrono::milliseconds interval(globalInterval);
-		
-		auto currentTime = std::chrono::steady_clock::now();
-			
-		static auto lastExecutionTime = currentTime;
-		auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastExecutionTime);
+		auto seq = CCSequence::create(
+			CCDelayTime::create(globalInterval),
+			CCCallFunc::create(m_fields->m_ambientChanger, callfunc_selector(AmbientColor::onChange)),
+			nullptr
+		);
 
-
-		if ((executeCode && elapsedTime >= interval || globalFirstTime)) { 
-			m_fields->m_ambientChanger->setIconColor(m_fields->m_ambientChanger->getScreenColor());
-			lastExecutionTime = currentTime;
-
-			if (globalFirstTime)
-				globalFirstTime = false;
-		}
-		
-		executeCode = !executeCode;
+		this->runAction(seq);
 	}
 };
