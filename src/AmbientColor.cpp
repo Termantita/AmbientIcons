@@ -45,8 +45,8 @@ ccColor3B AmbientColor::getScreenColor() {
 	auto oldPos = m_layer->getPosition();
 
 	m_layer->setPositionX(-size.width * m_pickPos.x);
-	if (m_playerFollowPicker && m_player2->getPositionX() == 0 && m_player2->getPositionY() == 0) { // Follow player picker
-		auto playerPos = m_player1->getPosition();
+	if (m_playerFollowPicker && m_layer->m_player2->getPositionX() == 0 && m_layer->m_player2->getPositionY() == 0) { // Follow player picker
+		auto playerPos = m_layer->m_player1->getPosition();
 		auto playerPosOffset = playerPos.y * (getPlayerFollowOffset() + 1.f);
 		
 		// Convert player level pos to player screen pos 0-1.f (related to level -> related to screen)
