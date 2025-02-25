@@ -1,11 +1,11 @@
 {
-	"geode": "4.0.1",
+	"geode": "4.2.0",
 	"gd": {
 		"win": "2.2074",
 		"android": "2.2074",
 		"mac": "2.2074"
 	},
-	"version": "v1.7.1",
+	"version": "v2.0.0",
 	"id": "terma.ambienticons",
 	"name": "Ambient Icons",
 	"developer": "Terma",
@@ -68,6 +68,12 @@
 				"slider": true,
 				"arrows": false
 			}
+		},
+		"color-picker": {
+			"type": "string",
+			"name": "Color Pickers",
+			"default": "Background",
+			"one-of": ["Screen", "Background"]
 		},
 		"player-follow-picker": {
 			"name": "Follow player",

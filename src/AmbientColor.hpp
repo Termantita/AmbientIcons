@@ -25,6 +25,7 @@ protected:
 		m_changeGlowColor = Mod::get()->getSettingValue<bool>("change-glow-color");
 
 		// Color pickers
+		m_colorPicker = Mod::get()->getSettingValue<std::string>("color-picker");
 		m_BGColorPicker = Mod::get()->getSettingValue<bool>("bg-color-picker");
 		m_changeMethodWhenBlack =
 			Mod::get()->getSettingValue<bool>("change-method-when-black");
@@ -54,6 +55,7 @@ private:
 	bool m_changeGlowColor;
 
 	// Color pickers
+	std::string m_colorPicker;
 	bool m_BGColorPicker;
 	bool m_changeMethodWhenBlack;
 
@@ -61,6 +63,7 @@ private:
 	bool m_playerFollowPicker;
 
 	ccColor3B getRenderColor(CCSprite* bgSprite);
+	bool isDisabled();
 
 public:
 	static AmbientColor* create(GJBaseGameLayer* layer) {
@@ -73,9 +76,9 @@ public:
 		return nullptr;
 	}
 
+	void onChange(CCObject* sender);
 	ccColor3B getScreenColor();
 	void setIconColor(ccColor3B color);
-	void setGlobedIconColor(ccColor3B color);
 
 	void setBGColorPicker() {
 		m_BGColorPicker = Mod::get()->getSettingValue<bool>("bg-color-picker");
