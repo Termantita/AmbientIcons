@@ -24,13 +24,11 @@ struct AmbientPlayLayer : Modify<AmbientPlayLayer, PlayLayer> {
 	};
 	
   	void onExit() {
-    	globalFirstTime = true;
     	PlayLayer::onExit();
   	}
 	
 	void resetLevel() {
 		PlayLayer::resetLevel();
-		globalFirstTime = true;
 	}
 
   	bool init(GJGameLevel* p0, bool p1, bool p2) {
