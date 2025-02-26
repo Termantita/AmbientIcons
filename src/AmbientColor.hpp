@@ -14,20 +14,8 @@ protected:
 		// this->m_player1 = layer->m_player1;
 		// this->m_player2 = layer->m_player2;
 
-		// Color changers
-		m_changeMainColor = Mod::get()->getSettingValue<bool>("change-main-color");
-		m_changeSecondaryColor =
-			Mod::get()->getSettingValue<bool>("change-secondary-color");
-		m_changeMainColorDual =
-			Mod::get()->getSettingValue<bool>("change-main-color-dual");
-		m_changeSecondaryColorDual =
-			Mod::get()->getSettingValue<bool>("change-secondary-color-dual");
-		m_changeWaveTrail = Mod::get()->getSettingValue<bool>("change-wave-trail");
-		m_changeGlowColor = Mod::get()->getSettingValue<bool>("change-glow-color");
 
 		// Color pickers
-		m_colorPicker = Mod::get()->getSettingValue<std::string>("color-picker");
-		m_BGColorPicker = Mod::get()->getSettingValue<bool>("bg-color-picker");
 		m_changeMethodWhenBlack =
 			Mod::get()->getSettingValue<bool>("change-method-when-black");
 
@@ -47,24 +35,13 @@ private:
 	// PlayerObject* m_player1;
 	// PlayerObject* m_player2;
 
-	// Color changers
-	bool m_changeMainColor;
-	bool m_changeSecondaryColor;
-	bool m_changeMainColorDual;
-	bool m_changeSecondaryColorDual;
-	bool m_changeWaveTrail;
-	bool m_changeGlowColor;
-
 	// Color pickers
-	std::string m_colorPicker;
-	bool m_BGColorPicker;
 	bool m_changeMethodWhenBlack;
 
 	bool m_changeMethodToPlayerFollowWhenBlack;
 	bool m_playerFollowPicker;
 
 	ccColor3B getRenderColor(CCSprite* bgSprite);
-	bool isDisabled();
 
 public:
 	static AmbientColor* create(GJBaseGameLayer* layer) {
@@ -80,10 +57,6 @@ public:
 	void onChange(CCObject* sender);
 	ccColor3B getScreenColor();
 	void setIconColor(ccColor3B color);
-
-	void setBGColorPicker() {
-		m_BGColorPicker = Mod::get()->getSettingValue<bool>("bg-color-picker");
-	}
 
 	void setPlayerFollowColorPicker() {
 		m_playerFollowPicker =

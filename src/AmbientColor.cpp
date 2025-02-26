@@ -1,4 +1,7 @@
+#include "Settings.hpp"
+
 #include "AmbientColor.hpp"
+
 
 void AmbientColor::onChange(CCObject* sender) {
 	setIconColor(getScreenColor());
@@ -9,7 +12,7 @@ ccColor3B AmbientColor::getRenderColor(CCSprite* bgSprite) {
 
 	renderTexture->begin(); // Rendering block
 
-	if (m_BGColorPicker && bgSprite)
+	if (Settings::getPicker() == Settings::ColorPicker::BG && bgSprite)
 		bgSprite->visit();
 	else
 		m_layer->visit();
@@ -23,21 +26,13 @@ ccColor3B AmbientColor::getRenderColor(CCSprite* bgSprite) {
 	delete img;
 	renderTexture->removeMeAndCleanup();
 
-	setBGColorPicker();
 	setPlayerFollowColorPicker();
 
 	return color;
 }
 
-bool AmbientColor::isDisabled() {
-	return !(m_changeMainColor || m_changeSecondaryColor || m_changeMainColorDual ||
-		m_changeSecondaryColorDual || m_changeWaveTrail || m_changeGlowColor);
-}
-
+// TODO: Rewrite this
 ccColor3B AmbientColor::getScreenColor() {
-	if (isDisabled())
-		return ccColor3B{0, 0, 0};
-
 	m_pickPos = CCPoint(getRenderXPos(), getRenderYPos());
 
 	auto size = CCDirector::sharedDirector()->getWinSize();
@@ -88,32 +83,41 @@ ccColor3B AmbientColor::getScreenColor() {
 }
 
 void AmbientColor::setIconColor(ccColor3B color) {
-	if (m_changeMainColor)
-		m_layer->m_player1->setColor(color);
-
-	if (m_changeSecondaryColor)
-		m_layer->m_player1->setSecondColor(color);
-
-	if (m_changeMainColorDual)
-		m_layer->m_player2->setColor(color);
-
-	if (m_changeSecondaryColorDual)
-		m_layer->m_player2->setSecondColor(color);
-
-	if (m_changeWaveTrail) {
-		if (m_layer->m_player1->m_isDart) {
-			m_layer->m_player1->m_waveTrail->setColor(color);
-		}
-		if (m_layer->m_player2->m_isDart) {
-			m_layer->m_player2->m_waveTrail->setColor(color);
-		}
+	switch (Settings::getPlayerPreference()) {
+		case Settings::BOTH:
+		case Settings::MAIN:
+			m_layer->m_player1->setColor(color);
+			break;
+		case Settings::SECONDARY:
+			m_layer->m_player1->setSecondColor(color);
+			break;
 	}
 
-	if (m_changeGlowColor) {
-		m_layer->m_player1->m_glowColor = color;
-		m_layer->m_player1->updateGlowColor();
+	switch (Settings::getPlayerPreference(true)) {
+		case Settings::BOTH:
+		case Settings::MAIN:
+			m_layer->m_player2->setColor(color);
+			break;
+		case Settings::SECONDARY:
+			m_layer->m_player2->setSecondColor(color);
+			break;
+	}
 
-		m_layer->m_player2->m_glowColor = color;
-		m_layer->m_player2->updateGlowColor();
+	switch (Settings::getExtra()) {
+		case Settings::GLOW:
+			m_layer->m_player1->m_glowColor = color;
+			m_layer->m_player1->updateGlowColor();
+
+			m_layer->m_player2->m_glowColor = color;
+			m_layer->m_player2->updateGlowColor();
+			break;
+		case Settings::WAVE_TRAIL:
+			if (m_layer->m_player1->m_isDart) {
+				m_layer->m_player1->m_waveTrail->setColor(color);
+			}
+			if (m_layer->m_player2->m_isDart) {
+				m_layer->m_player2->m_waveTrail->setColor(color);
+			}
+			break;
 	}
 }
