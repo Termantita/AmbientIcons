@@ -36,9 +36,9 @@ public:
 		auto setting = isP2 ? "change-p2-color" : "change-p1-color";
 		auto preference = Mod::get()->getSettingValue<std::string>(setting);
 
-		if (preference == "MAIN")
+		if (preference == "Main")
 			return PlayerColor::MAIN;
-		if (preference == "SECONDARY")
+		if (preference == "Secondary")
 			return PlayerColor::SECONDARY;
 		return PlayerColor::BOTH;
 	}

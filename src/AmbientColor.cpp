@@ -45,7 +45,7 @@ ccColor3B AmbientColor::getScreenColor() {
 		auto playerPosOffset = playerPos.y * (getPlayerFollowOffset() + 1.f);
 		
 		// Convert player level pos to player screen pos 0-1.f (related to level -> related to screen)
-		auto screenPlayerPosY = playerPosOffset / size.height < 1.f ? playerPosOffset / size.height : 1.f; 
+		auto screenPlayerPosY = playerPosOffset / size.height < 1.f ? playerPosOffset / size.height : 1.f;
 
 		m_layer->setPositionY(-screenPlayerPosY * size.height);
 	} else {
@@ -85,6 +85,9 @@ ccColor3B AmbientColor::getScreenColor() {
 void AmbientColor::setIconColor(ccColor3B color) {
 	switch (Settings::getPlayerPreference()) {
 		case Settings::BOTH:
+			m_layer->m_player1->setColor(color);
+			m_layer->m_player1->setSecondColor(color);
+			break;
 		case Settings::MAIN:
 			m_layer->m_player1->setColor(color);
 			break;
@@ -95,6 +98,9 @@ void AmbientColor::setIconColor(ccColor3B color) {
 
 	switch (Settings::getPlayerPreference(true)) {
 		case Settings::BOTH:
+			m_layer->m_player2->setColor(color);
+			m_layer->m_player2->setSecondColor(color);
+			break;
 		case Settings::MAIN:
 			m_layer->m_player2->setColor(color);
 			break;
