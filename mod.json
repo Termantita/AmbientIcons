@@ -12,36 +12,24 @@
 	"description": "Syncs the color of your icons with the level.",
 	"tags": ["customization"],
 	"settings": {
-		"change-main-color": {
-			"name": "Change main color",
-			"type": "bool",
-			"default": true
+		"change-p1-color": {
+			"name": "Change P1 color",
+			"type": "string",
+			"default": "Main",
+			"one-of": ["Main", "Secondary", "Both"]
 		},
-		"change-secondary-color": {
-			"name": "Change secondary color",
-			"type": "bool",
-			"default": false
+		"change-p2-color": {
+			"name": "Change P2 color",
+			"type": "string",
+			"default": "Main",
+			"one-of": ["Main", "Secondary", "Both"]
 		},
-		"change-main-color-dual": {
-			"name": "Change dual main color",
-			"type": "bool",
-			"default": true
-		},
-		"change-secondary-color-dual": {
-			"name": "Change dual secondary color",
-			"type": "bool",
-			"default": false
-		},
-		"change-wave-trail": {
-			"name": "Change wave trail color",
-			"description": "<co>Having ambient glow enabled makes this option useless.</c>",
-			"type": "bool",
-			"default": true
-		},
-		"change-glow-color": {
-			"name": "Change glow color",
-			"type": "bool",
-			"default": false
+		"change-extra": {
+			"name": "Change extra colors",
+			"type": "string",
+			"default": "Wave Trail",
+			"one-of": ["Wave Trail", "Glow + Wave Trail"],
+			"description": "You can't have only wave trail enabled, it will be overriden by the glow color option."
 		},
 		"render-x-pos": {
 			"name": "Set X",
@@ -71,7 +59,7 @@
 		},
 		"color-picker": {
 			"type": "string",
-			"name": "Color Pickers",
+			"name": "Color Picker",
 			"default": "Background",
 			"one-of": ["Screen", "Background"]
 		},
@@ -106,12 +94,6 @@
 				"arrows": false
 			}
 		},
-		"bg-color-picker": {
-			"name": "Pick color from BG",
-			"description": "Picks the background color instead of picking the screen color.\n<co>Having this option disabled can cause flashing lights. Doesn't change on custom BG</c>",
-			"type": "bool",
-			"default": true
-		},
 		"change-method-when-black": {
 			"name": "Change method on black",
 			"description": "Change the pick color method (BG picker to non-follow screen picker) if the color picked in the BG is black (0,0,0).",
@@ -125,35 +107,27 @@
 			"default": true
 		}
 	},
-	"incompatibilities": [
-		{
-			"id": "saumondeluxe.rainbow_icon",
-			"version": "*",
-			"importance": "conflicting"
+	"incompatibilities": {
+		"saumondeluxe.rainbow_icon": {
+			"importance": "conflicting",
+			"version": "*"
 		},
-		{
-			"id": "ninkaz.blending_glow",
-			"version": "*",
-			"importance": "conflicting"
+		"ninkaz.blending_glow": {
+			"importance": "conflicting",
+			"version": "*"
 		},
-		{
-			"id": "capeling.coloured-wave-trail",
-			"version": "*",
-			"importance": "conflicting"
+		"capeling.coloured-wave-trail": {
+			"importance": "conflicting",
+			"version": "*"
 		},
-		{
-			"id": "asaki_zuki.same_dual_color",
-			"version": "*",
-			"importance": "conflicting"
+		"asaki_zuki.same_dual_color": {
+			"importance": "conflicting",
+			"version": "*"
 		}
-	],
-	"dependencies": [
-		{
-			"id": "geode.node-ids",
-			"importance": "required",
-			"version": ">=1.8.0"
-		}
-	],
+ 	},
+	"dependencies": {
+  		"geode.node-ids": ">=1.8.0"
+ 	},
 	"links": {
 		"source": "https://github.com/Termantita/AmbientIcons"
 	}
