@@ -1,5 +1,7 @@
 #include <Geode/Geode.hpp>
 
+#include "Settings.hpp"
+
 using namespace geode::prelude;
 
 class AmbientColor : public CCNode {
@@ -14,15 +16,8 @@ protected:
 		// this->m_player1 = layer->m_player1;
 		// this->m_player2 = layer->m_player2;
 
-
-		// Color pickers
 		m_changeMethodWhenBlack =
-			Mod::get()->getSettingValue<bool>("change-method-when-black");
-
-		m_changeMethodToPlayerFollowWhenBlack =
-			Mod::get()->getSettingValue<bool>("change-to-follow-method-when-black");
-		m_playerFollowPicker =
-			Mod::get()->getSettingValue<bool>("player-follow-picker");
+			Mod::get()->getSettingValue<bool>("on-black:change-to-screen-picker");
 
 		return true;
 	}
@@ -35,13 +30,10 @@ private:
 	// PlayerObject* m_player1;
 	// PlayerObject* m_player2;
 
-	// Color pickers
 	bool m_changeMethodWhenBlack;
 
-	bool m_changeMethodToPlayerFollowWhenBlack;
-	bool m_playerFollowPicker;
-
-	ccColor3B getRenderColor(CCSprite* bgSprite);
+	ccColor3B getRenderColor(CCSprite* bgSprite, Settings::ColorPicker picker);
+	CCSprite* getPickSprite();
 
 public:
 	static AmbientColor* create(GJBaseGameLayer* layer) {
@@ -58,20 +50,11 @@ public:
 	ccColor3B getScreenColor();
 	void setIconColor(ccColor3B color);
 
-	void setPlayerFollowColorPicker() {
-		m_playerFollowPicker =
-			Mod::get()->getSettingValue<bool>("player-follow-picker");
-	}
-
 	double getRenderXPos() {
 		return Mod::get()->getSettingValue<double>("render-x-pos");
 	}
 
 	double getRenderYPos() {
 		return Mod::get()->getSettingValue<double>("render-y-pos");
-	}
-
-	double getPlayerFollowOffset() {
-		return Mod::get()->getSettingValue<double>("player-follow-offset");
 	}
 };

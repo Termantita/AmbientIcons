@@ -27,9 +27,9 @@ public:
 	}
 
 	static Extra getExtra() {
-		if (Mod::get()->getSettingValue<std::string>("change-extra") == "Glow")
-			return Extra::GLOW;
-		return Extra::WAVE_TRAIL;
+		if (Mod::get()->getSettingValue<std::string>("change-extra") == "Wave Trail")
+			return Extra::WAVE_TRAIL;
+		return Extra::GLOW;
 	}
 
 	static PlayerColor getPlayerPreference(bool isP2 = false) {

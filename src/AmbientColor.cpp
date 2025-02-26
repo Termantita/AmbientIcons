@@ -1,5 +1,3 @@
-#include "Settings.hpp"
-
 #include "AmbientColor.hpp"
 
 
@@ -7,7 +5,7 @@ void AmbientColor::onChange(CCObject* sender) {
 	setIconColor(getScreenColor());
 }
 
-ccColor3B AmbientColor::getRenderColor(CCSprite* bgSprite) {
+ccColor3B AmbientColor::getRenderColor(CCSprite* bgSprite, Settings::ColorPicker picker) {
 	auto renderTexture = CCRenderTexture::create(1, 1);
 
 	renderTexture->begin(); // Rendering block
@@ -26,12 +24,22 @@ ccColor3B AmbientColor::getRenderColor(CCSprite* bgSprite) {
 	delete img;
 	renderTexture->removeMeAndCleanup();
 
-	setPlayerFollowColorPicker();
-
 	return color;
 }
 
-// TODO: Rewrite this
+CCSprite* AmbientColor::getPickSprite() {
+	auto parent = m_layer->getChildByIDRecursive("main-node");
+	CCSprite* bgSprite = nullptr;
+
+	if (parent->getChildByID("background"))
+		bgSprite = static_cast<CCSprite *>(parent->getChildByID("background"));
+	else {
+		log::debug("No background found");
+		bgSprite = parent->getChildByType<CCSprite>(0);
+	}
+	return bgSprite;
+}
+
 ccColor3B AmbientColor::getScreenColor() {
 	m_pickPos = CCPoint(getRenderXPos(), getRenderYPos());
 
@@ -39,44 +47,32 @@ ccColor3B AmbientColor::getScreenColor() {
 
 	auto oldPos = m_layer->getPosition();
 
+	// For getting the exact position on the screen, we will move the layer itself, because of the RenderTexture capabilities
+	// For m_layer (which is the layer), we need negative numbers to move the layer off screen and get the exact position
 	m_layer->setPositionX(-size.width * m_pickPos.x);
-	if (m_playerFollowPicker && m_layer->m_player2->getPositionX() == 0 && m_layer->m_player2->getPositionY() == 0) { // Follow player picker
-		auto playerPos = m_layer->m_player1->getPosition();
-		auto playerPosOffset = playerPos.y * (getPlayerFollowOffset() + 1.f);
-		
-		// Convert player level pos to player screen pos 0-1.f (related to level -> related to screen)
-		auto screenPlayerPosY = playerPosOffset / size.height < 1.f ? playerPosOffset / size.height : 1.f;
+	m_layer->setPositionY(-size.height * m_pickPos.y);
 
-		m_layer->setPositionY(-screenPlayerPosY * size.height);
-	} else {
-		m_layer->setPositionY(-size.height * m_pickPos.y); // Normal/fixed position picker
+	if (Mod::get()->getSettingValue<bool>("draw-pos")) {
+		if (auto spr = m_layer->m_objectLayer->getChildByIDRecursive("test"_spr))
+			spr->removeMeAndCleanup();
+
+		auto circleSpr = CCSprite::create("circle.png");
+		circleSpr->setPosition({static_cast<float>(size.width * m_pickPos.x), static_cast<float>(size.height * m_pickPos.y)});
+		circleSpr->setID("test"_spr);
+
+		m_layer->addChild(circleSpr);
 	}
 
-	auto parent = m_layer->getChildByIDRecursive("main-node");
-	CCSprite* bgSprite = nullptr;
 
-	if (parent->getChildByID("background"))
-		bgSprite = static_cast<CCSprite *>(parent->getChildByID("background"));
-	else 
-		bgSprite = parent->getChildByType<CCSprite>(0);
+	auto pickSprite = getPickSprite();
+	ccColor3B color = getRenderColor(pickSprite, Settings::getPicker());
+	
+	if (Mod::get()->getSettingValue<bool>("debug-color"))
+		log::info("RGB: {} {} {}", color.r, color.g, color.b);
 
-	ccColor3B color = getRenderColor(bgSprite);
-	log::info("Color: {} {} {}", color.r, color.g, color.b);
-
-
-	// if (color == ccColor3B{0, 0, 0} && m_changeMethodWhenBlack) {
-
-	// 	if (bgSprite) {
-	// 		m_BGColorPicker = false;
-	// 		color = getRenderColor(bgSprite);
-	// 	}		
-		
-	// 	if (m_changeMethodToPlayerFollowWhenBlack) {
-	// 		m_playerFollowPicker = true;
-	// 		getScreenColor(); // could lead to infinite recursion
-	// 	}
-	// }
-
+	if (color == ccColor3B{0, 0, 0} && m_changeMethodWhenBlack) {
+		getRenderColor(pickSprite, Settings::ColorPicker::SCREEN);
+	}
 	m_layer->setPosition(oldPos);
 
 	return color;
@@ -118,12 +114,10 @@ void AmbientColor::setIconColor(ccColor3B color) {
 			m_layer->m_player2->updateGlowColor();
 			break;
 		case Settings::WAVE_TRAIL:
-			if (m_layer->m_player1->m_isDart) {
+			if (m_layer->m_player1->m_isDart)
 				m_layer->m_player1->m_waveTrail->setColor(color);
-			}
-			if (m_layer->m_player2->m_isDart) {
+			if (m_layer->m_player2->m_isDart)
 				m_layer->m_player2->m_waveTrail->setColor(color);
-			}
 			break;
 	}
 }
