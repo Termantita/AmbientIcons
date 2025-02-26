@@ -12,6 +12,10 @@
 	"description": "Syncs the color of your icons with the level.",
 	"tags": ["customization"],
 	"settings": {
+		"title-color": {
+			"name": "Customization",
+			"type": "title"
+		},
 		"change-p1-color": {
 			"name": "Change P1 color",
 			"type": "string",
@@ -29,7 +33,37 @@
 			"type": "string",
 			"default": "Wave Trail",
 			"one-of": ["Wave Trail", "Glow + Wave Trail"],
-			"description": "You can't have only wave trail enabled, it will be overriden by the glow color option."
+			"description": "You can't have just wave trail enabled, it will be overriden by the glow color option (blame robtop not me)."
+		},
+		"picker-title": {
+			"name": "Picker settings",
+			"type": "title"
+		},
+		"color-picker": {
+			"type": "string",
+			"name": "Color Picker",
+			"default": "Background",
+			"description": "Select which method to use when getting/picking the colors.",
+			"one-of": ["Screen", "Background"]
+		},
+		"on-black:change-to-screen-picker": {
+			"name": "Change picker when black",
+			"type": "bool",
+			"default": true,
+			"description": "Changes to screen picker when the BG picker returns black [0,0,0], supposing the level has a custom/mid BG."
+		},
+		"update-time": {
+			"name": "Update time (ms)",
+			"description": "<co>Increase the value if there are too many flashing colors or having fps drops.</c>",
+			"type": "int",
+			"default": 0,
+			"min": 0,
+			"max": 1000,
+			"control": {
+				"slider": true,
+				"arrows": false,
+				"slider-step": 10
+			}
 		},
 		"render-x-pos": {
 			"name": "Set X",
@@ -57,54 +91,20 @@
 				"arrows": false
 			}
 		},
-		"color-picker": {
-			"type": "string",
-			"name": "Color Picker",
-			"default": "Background",
-			"one-of": ["Screen", "Background"]
+		"debug-title": {
+			"name": "Debug",
+			"type": "title",
+			"description": "These should be used for debugging purposes only. This also may cause lag."
 		},
-		"player-follow-picker": {
-			"name": "Follow player",
-			"description": "The color picker follows the player\n<co>Useful when the level has a custom BG, doesn't work with dual.</c>",
+		"draw-pos": {
+			"name": "Draw render position",
 			"type": "bool",
 			"default": false
 		},
-		"player-follow-offset": {
-			"name": "Follow player Y offset",
-			"description": "Set where in the Y axis pick the colors related to the player position on Y\n(player pos + offset).",
-			"type": "float",
-			"default": 0.1,
-			"min": 0,
-			"max": 0.3,
-			"control": {
-				"slider-step": 0.1,
-				"slider": true,
-				"arrows": false
-			}
-		},
-		"update-time": {
-			"name": "Update time (ms)",
-			"description": "<co>Increase the value if there are too many flashing colors or having fps drops.</c>",
-			"type": "int",
-			"default": 0,
-			"min": 0,
-			"max": 1000,
-			"control": {
-				"slider": true,
-				"arrows": false
-			}
-		},
-		"change-method-when-black": {
-			"name": "Change method on black",
-			"description": "Change the pick color method (BG picker to non-follow screen picker) if the color picked in the BG is black (0,0,0).",
+		"debug-color": {
+			"name": "Debug color on console",
 			"type": "bool",
-			"default": true
-		},
-		"change-to-follow-method-when-black": {
-			"name": "Change method to follow",
-			"description": "Change the pick color method (BG picker to screen player follow picker) if the color picked in the BG is black (0,0,0).\n<co>Overwrites above option</c>",
-			"type": "bool",
-			"default": true
+			"default": false
 		}
 	},
 	"incompatibilities": {
