@@ -1,5 +1,16 @@
 # Ambient Icons Changelog
 
+## v2.0.0
+
+- <cy>Ported</c> to 2.2074</c>
+- <cy>Adapted</c> update time to CCDelayTime
+- <cy>Removed</c> player player follow picker (this was buggy af)
+- <cy>Adapted</c> to settings V3
+- <cy>Updated</c> to Geode 4.2.0
+- <cy>Improved</c> all the codebase
+
+---
+
 ## v1.6.2-beta
 
 - <cy>Updated</c> to Geode 3.0.0-alpha.2 (yes it's only this)
