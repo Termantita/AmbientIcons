@@ -2,7 +2,10 @@
 
 
 void AmbientColor::onChange(CCObject* sender) {
-	setIconColor(getScreenColor());
+	auto color = getScreenColor();
+
+	setIconColor(color, m_layer->m_player1);
+	setIconColor(color, m_layer->m_player2, true);
 }
 
 ccColor3B AmbientColor::getRenderColor(CCSprite* bgSprite, Settings::ColorPicker picker) {
@@ -78,46 +81,28 @@ ccColor3B AmbientColor::getScreenColor() {
 	return color;
 }
 
-void AmbientColor::setIconColor(ccColor3B color) {
-	switch (Settings::getPlayerPreference()) {
+void AmbientColor::setIconColor(ccColor3B color, PlayerObject* player, bool isP2) {
+	switch (Settings::getPlayerPreference(isP2)) {
 		case Settings::BOTH:
-			m_layer->m_player1->setColor(color);
-			m_layer->m_player1->setSecondColor(color);
+			player->setColor(color);
+			player->setSecondColor(color);
 			break;
 		case Settings::MAIN:
-			m_layer->m_player1->setColor(color);
+			player->setColor(color);
 			break;
 		case Settings::SECONDARY:
-			m_layer->m_player1->setSecondColor(color);
+			player->setSecondColor(color);
 			break;
 	}
 
-	switch (Settings::getPlayerPreference(true)) {
-		case Settings::BOTH:
-			m_layer->m_player2->setColor(color);
-			m_layer->m_player2->setSecondColor(color);
-			break;
-		case Settings::MAIN:
-			m_layer->m_player2->setColor(color);
-			break;
-		case Settings::SECONDARY:
-			m_layer->m_player2->setSecondColor(color);
-			break;
-	}
-
-	switch (Settings::getExtra()) {
+	switch (Settings::getExtra(isP2)) {
 		case Settings::GLOW:
-			m_layer->m_player1->m_glowColor = color;
-			m_layer->m_player1->updateGlowColor();
-
-			m_layer->m_player2->m_glowColor = color;
-			m_layer->m_player2->updateGlowColor();
+			player->m_glowColor = color;
+			player->updateGlowColor();
 			break;
 		case Settings::WAVE_TRAIL:
-			if (m_layer->m_player1->m_isDart)
-				m_layer->m_player1->m_waveTrail->setColor(color);
-			if (m_layer->m_player2->m_isDart)
-				m_layer->m_player2->m_waveTrail->setColor(color);
+			if (player->m_isDart)
+				player->m_waveTrail->setColor(color);
 			break;
 	}
 }

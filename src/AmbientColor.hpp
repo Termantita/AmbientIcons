@@ -48,7 +48,7 @@ public:
 
 	void onChange(CCObject* sender);
 	ccColor3B getScreenColor();
-	void setIconColor(ccColor3B color);
+	void setIconColor(ccColor3B color, PlayerObject* player, bool isP2 = false);
 
 	double getRenderXPos() {
 		return Mod::get()->getSettingValue<double>("render-x-pos");
