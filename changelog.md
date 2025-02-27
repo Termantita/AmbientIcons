@@ -8,6 +8,7 @@
 - <cy>Adapted</c> to settings V3
 - <cy>Updated</c> to Geode 4.2.0
 - <cy>Improved</c> all the codebase
+- <cy>Added</c> some debugging options
 
 ---
 
