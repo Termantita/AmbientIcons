@@ -26,8 +26,9 @@ public:
 		return ColorPicker::SCREEN;
 	}
 
-	static Extra getExtra() {
-		if (Mod::get()->getSettingValue<std::string>("change-extra") == "Wave Trail")
+	static Extra getExtra(bool isP2 = false) {
+		auto setting = isP2 ? "change-p2-extra" : "change-p1-extra";
+		if (Mod::get()->getSettingValue<std::string>(setting) == "Wave Trail")
 			return Extra::WAVE_TRAIL;
 		return Extra::GLOW;
 	}
