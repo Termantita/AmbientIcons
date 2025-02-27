@@ -104,5 +104,7 @@ void AmbientColor::setIconColor(ccColor3B color, PlayerObject* player, bool isP2
 			if (player->m_isDart)
 				player->m_waveTrail->setColor(color);
 			break;
+		case Settings::NONE:
+			break;
 	}
 }

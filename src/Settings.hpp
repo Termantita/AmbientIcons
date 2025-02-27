@@ -17,7 +17,8 @@ public:
 
 	enum Extra {
 		GLOW,
-		WAVE_TRAIL
+		WAVE_TRAIL,
+		NONE
 	};
 
 	static ColorPicker getPicker() {
@@ -28,8 +29,12 @@ public:
 
 	static Extra getExtra(bool isP2 = false) {
 		auto setting = isP2 ? "change-p2-extra" : "change-p1-extra";
-		if (Mod::get()->getSettingValue<std::string>(setting) == "Wave Trail")
+		auto option = Mod::get()->getSettingValue<std::string>(setting);
+		
+		if (option == "Wave Trail")
 			return Extra::WAVE_TRAIL;
+		if (option == "None")
+			return Extra::NONE;
 		return Extra::GLOW;
 	}
 

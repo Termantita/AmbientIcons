@@ -32,14 +32,14 @@
 			"name": "Change P1 extra colors",
 			"type": "string",
 			"default": "Wave Trail",
-			"one-of": ["Wave Trail", "Glow + Wave Trail"],
+			"one-of": ["None", "Wave Trail", "Glow + Wave Trail"],
 			"description": "You can't have just wave trail enabled, it will be overriden by the glow color option (blame robtop not me)."
 		},
 		"change-p2-extra": {
 			"name": "Change P2 extra colors",
 			"type": "string",
 			"default": "Wave Trail",
-			"one-of": ["Wave Trail", "Glow + Wave Trail"],
+			"one-of": ["None", "Wave Trail", "Glow + Wave Trail"],
 			"description": "You can't have just wave trail enabled, it will be overriden by the glow color option (blame robtop not me)."
 		},
 		"picker-title": {
