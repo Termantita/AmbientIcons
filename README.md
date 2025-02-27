@@ -1,9 +1,9 @@
 # AmbientIcons
 
-Change the color of your icons based on the color of your screen or gd background.
+Change the color of your icons based on the color of your screen or background.
 
 ## Platforms
-Windows, Android and MacOS! (thanks to Erymanthus for testing and Justin who found the binding)
+Windows, Android and MacOS! (thanks to [Erymanthus](https://github.com/RayDeeUx) for testing and [HimJasmine](https://github.com/hiimjasmine00) who found the binding)
 
 ---
 ### Fully customizable
@@ -12,7 +12,7 @@ TODO: Add images
 ### With different color pickers/methods: 
 - **From BG** (without objects affecting the picked color)
 - **From the screen** (classic picker)
-- **By following the player** (doesn't work on 2 player mode)
+- ~~**By following the player** (doesn't work on 2 player mode)~~
 
 ---
 
@@ -20,16 +20,14 @@ TODO: Add images
 
 - **Dasshu/Jay** | New icon/logo design
 
-  - [Twitter](https://x.com/DasshuGames)
+  - ~~Twitter~~[Bluesky]([https://x.com/DasshuGames](https://bsky.app/profile/dasshu.dev))
   - [Discord](https://discord.gg/CSX3RW7FXq)
 
 ---
 
 ### Upcoming features
 - [ ] Invert colors
-- [ ] Adapt to cocos timeouts
+- [X] Adapt to cocos timeouts
 - [ ] Smooth change between picks
 - [ ] Some kind of environmental glow maybe
-- [ ] Rewrite ~~follow player picker~~ the whole mod
-
-> Sorry for the inactivity! i didnt have ideas and im busy with some projects
+- [X] Rewrite ~~follow player picker~~ the whole mod
