@@ -20,7 +20,7 @@ TODO: Add images
 
 - **Dasshu/Jay** | New icon/logo design
 
-  - ~~Twitter~~[Bluesky]([https://x.com/DasshuGames](https://bsky.app/profile/dasshu.dev))
+  - ~~Twitter~~[Bluesky](https://bsky.app/profile/dasshu.dev)
   - [Discord](https://discord.gg/CSX3RW7FXq)
 
 ---
