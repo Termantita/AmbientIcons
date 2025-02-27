@@ -21,18 +21,21 @@ struct AmbientGJBGL : Modify<AmbientGJBGL, GJBaseGameLayer> {
 		if (!GJBaseGameLayer::init())
 			return false;
 		m_fields->m_ambientChanger = AmbientColor::create(this);
+		
 		return true;
 	}
 
 	void update(float p0) {
 		GJBaseGameLayer::update(p0);
+		auto ambient = m_fields->m_ambientChanger;
 
 		auto seq = CCSequence::create(
-			CCDelayTime::create(globalInterval),
-			CCCallFunc::create(m_fields->m_ambientChanger, callfunc_selector(AmbientColor::onChange)),
+			CCCallFunc::create(ambient, callfunc_selector(AmbientColor::onChange)),
+			CCDelayTime::create(static_cast<float>(globalInterval) / 1000),
+			CCCallFunc::create(ambient, callfunc_selector(AmbientColor::onFinish)),
 			nullptr
 		);
 
-		this->runAction(seq);
+		if (ambient->isActionFinished() && ambient->m_isEnabled) this->runAction(seq);
 	}
 };

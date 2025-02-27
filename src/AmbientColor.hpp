@@ -16,6 +16,7 @@ protected:
 		// this->m_player1 = layer->m_player1;
 		// this->m_player2 = layer->m_player2;
 
+		m_isEnabled = Mod::get()->getSettingValue<bool>("mod-enabled");
 		m_changeMethodWhenBlack =
 			Mod::get()->getSettingValue<bool>("on-black:change-to-screen-picker");
 
@@ -31,11 +32,14 @@ private:
 	// PlayerObject* m_player2;
 
 	bool m_changeMethodWhenBlack;
+	bool m_isFinished = true;
 
 	ccColor3B getRenderColor(CCSprite* bgSprite, Settings::ColorPicker picker);
 	CCSprite* getPickSprite();
 
 public:
+	bool m_isEnabled;
+	
 	static AmbientColor* create(GJBaseGameLayer* layer) {
 		auto ret = new AmbientColor();
 		if (ret && ret->init(layer)) {
@@ -56,5 +60,14 @@ public:
 
 	double getRenderYPos() {
 		return Mod::get()->getSettingValue<double>("render-y-pos");
+	}
+
+	// Have to do this bc of CCSequence being shit
+	bool isActionFinished() {
+		return m_isFinished;
+	}
+
+	void onFinish(CCObject* sender) {
+		m_isFinished = true;
 	}
 };

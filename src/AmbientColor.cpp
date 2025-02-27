@@ -2,6 +2,8 @@
 
 
 void AmbientColor::onChange(CCObject* sender) {
+	m_isFinished = false;
+	
 	auto color = getScreenColor();
 
 	setIconColor(color, m_layer->m_player1);
@@ -13,7 +15,7 @@ ccColor3B AmbientColor::getRenderColor(CCSprite* bgSprite, Settings::ColorPicker
 
 	renderTexture->begin(); // Rendering block
 
-	if (Settings::getPicker() == Settings::ColorPicker::BG && bgSprite)
+	if (picker == Settings::ColorPicker::BG && bgSprite)
 		bgSprite->visit();
 	else
 		m_layer->visit();
@@ -56,12 +58,12 @@ ccColor3B AmbientColor::getScreenColor() {
 	m_layer->setPositionY(-size.height * m_pickPos.y);
 
 	if (Mod::get()->getSettingValue<bool>("draw-pos")) {
-		if (auto spr = m_layer->m_objectLayer->getChildByIDRecursive("test"_spr))
+		if (auto spr = m_layer->getChildByIDRecursive("render-pos-circle"_spr))
 			spr->removeMeAndCleanup();
 
 		auto circleSpr = CCSprite::create("circle.png");
 		circleSpr->setPosition({static_cast<float>(size.width * m_pickPos.x), static_cast<float>(size.height * m_pickPos.y)});
-		circleSpr->setID("test"_spr);
+		circleSpr->setID("render-pos-circle"_spr);
 
 		m_layer->addChild(circleSpr);
 	}

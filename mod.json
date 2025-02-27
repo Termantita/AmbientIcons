@@ -12,6 +12,11 @@
 	"description": "Syncs the color of your icons with the level.",
 	"tags": ["customization"],
 	"settings": {
+		"mod-enabled": {
+			"name": "Enable",
+			"type": "bool",
+			"default": true
+		},
 		"title-color": {
 			"name": "Customization",
 			"type": "title"
