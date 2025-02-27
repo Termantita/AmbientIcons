@@ -9,6 +9,7 @@
 - <cy>Updated</c> to Geode 4.2.0
 - <cy>Improved</c> all the codebase
 - <cy>Added</c> some debugging options
+- <cy>Added</c> an option for enable/disable the mod
 
 ---
 
