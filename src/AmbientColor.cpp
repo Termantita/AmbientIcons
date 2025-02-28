@@ -84,6 +84,7 @@ ccColor3B AmbientColor::getScreenColor() {
 }
 
 void AmbientColor::setIconColor(ccColor3B color, PlayerObject* player, bool isP2) {
+	// TODO: Fix bad colors after dashing without having both colors enabled
 	switch (Settings::getPlayerPreference(isP2)) {
 		case Settings::BOTH:
 			player->setColor(color);
