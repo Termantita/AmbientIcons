@@ -1,5 +1,10 @@
 # Ambient Icons Changelog
 
+## v2.0.1
+- <cy>Fixed</c> a possible performance issue if the mod is disabled
+
+---
+
 ## v2.0.0
 
 - <cy>Ported</c> to 2.2074</c>
