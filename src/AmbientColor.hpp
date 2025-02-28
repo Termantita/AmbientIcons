@@ -16,7 +16,6 @@ protected:
 		// this->m_player1 = layer->m_player1;
 		// this->m_player2 = layer->m_player2;
 
-		m_isEnabled = Mod::get()->getSettingValue<bool>("mod-enabled");
 		m_changeMethodWhenBlack =
 			Mod::get()->getSettingValue<bool>("on-black:change-to-screen-picker");
 
@@ -38,8 +37,6 @@ private:
 	CCSprite* getPickSprite();
 
 public:
-	bool m_isEnabled;
-	
 	static AmbientColor* create(GJBaseGameLayer* layer) {
 		auto ret = new AmbientColor();
 		if (ret && ret->init(layer)) {

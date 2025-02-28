@@ -15,27 +15,35 @@ $execute {
 struct AmbientGJBGL : Modify<AmbientGJBGL, GJBaseGameLayer> {
 	struct Fields {
 		Ref<AmbientColor> m_ambientChanger;
+		Ref<CCSequence> seq;
 	};
 
 	bool init() {
 		if (!GJBaseGameLayer::init())
 			return false;
+
+		if (!Mod::get()->getSettingValue<bool>("mod-enabled"))
+			return true;
+
 		m_fields->m_ambientChanger = AmbientColor::create(this);
 		
-		return true;
-	}
-
-	void update(float p0) {
-		GJBaseGameLayer::update(p0);
 		auto ambient = m_fields->m_ambientChanger;
-
-		auto seq = CCSequence::create(
+		m_fields->seq = CCSequence::create(
 			CCCallFunc::create(ambient, callfunc_selector(AmbientColor::onChange)),
 			CCDelayTime::create(static_cast<float>(globalInterval) / 1000),
 			CCCallFunc::create(ambient, callfunc_selector(AmbientColor::onFinish)),
 			nullptr
 		);
 
-		if (ambient->isActionFinished() && ambient->m_isEnabled) this->runAction(seq);
+		return true;
+	}
+
+	void update(float p0) {
+		GJBaseGameLayer::update(p0);
+
+		if (!Mod::get()->getSettingValue<bool>("mod-enabled"))
+			return;
+
+		if (m_fields->m_ambientChanger->isActionFinished()) this->runAction(m_fields->seq);
 	}
 };
