@@ -68,7 +68,7 @@
 			"name": "Update time (ms)",
 			"description": "<co>Increase the value if there are too many flashing colors or having fps drops.</c>",
 			"type": "int",
-			"default": 0,
+			"default": 50,
 			"min": 0,
 			"max": 1000,
 			"control": {
