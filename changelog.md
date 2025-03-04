@@ -1,7 +1,9 @@
 # Ambient Icons Changelog
 
 ## v2.0.1
+
 - <cy>Fixed</c> a possible performance issue if the mod is disabled
+- <cy>Modified</c> default update time value from 0ms to 50ms
 
 ---
 
@@ -15,6 +17,7 @@
 - <cy>Improved</c> all the codebase
 - <cy>Added</c> some debugging options
 - <cy>Added</c> an option for enable/disable the mod
+- <cy>Ported</c> to MacOS
 
 ---
 
