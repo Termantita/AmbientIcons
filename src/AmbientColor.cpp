@@ -19,7 +19,7 @@ ccColor3B AmbientColor::getRenderColor(GJBaseGameLayer* layer, CCSprite* bgSprit
 
 	m_renderTexture->begin(); // Rendering block
 
-	if (picker == Settings::ColorPicker::BG && bgSprite)
+	if (picker == Settings::BG && bgSprite)
 		bgSprite->visit();
 	else
 		layer->visit();
@@ -42,7 +42,6 @@ CCSprite* AmbientColor::getPickSprite(GJBaseGameLayer* layer) {
 	if (parent->getChildByID("background"))
 		bgSprite = static_cast<CCSprite *>(parent->getChildByID("background"));
 	else {
-		log::debug("No background found");
 		bgSprite = parent->getChildByType<CCSprite>(0);
 	}
 	return bgSprite;
@@ -79,8 +78,9 @@ ccColor3B AmbientColor::getScreenColor(GJBaseGameLayer* layer) {
 		log::info("RGB: {} {} {}", color.r, color.g, color.b);
 
 	if (color == ccColor3B{0, 0, 0} && m_changeMethodWhenBlack) {
-		getRenderColor(layer, pickSprite, Settings::ColorPicker::SCREEN);
+		color = getRenderColor(layer, pickSprite, Settings::ColorPicker::SCREEN);
 	}
+
 	layer->setPosition(oldPos);
 
 	return color;

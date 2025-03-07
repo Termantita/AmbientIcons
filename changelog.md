@@ -1,5 +1,13 @@
 # Ambient Icons Changelog
 
+## v2.0.2 - The [dank_meme](https://github.com/dankmeme01) update
+
+- <cy>Improved</c> performance a lot - dank
+- <cy>Improved</c> codebase again - dank
+- <cy>Fixed</c> `Changer picker when black` option (it was the silliest thing ever)
+
+---
+
 ## v2.0.1
 
 - <cy>Fixed</c> a possible performance issue if the mod is disabled

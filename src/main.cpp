@@ -15,10 +15,10 @@ struct AmbientGJBGL : Modify<AmbientGJBGL, GJBaseGameLayer> {
 		if (!GJBaseGameLayer::init())
 			return false;
 
-		if (!Mod::get()->getSettingValue<bool>("mod-enabled"))
-			return true;
-
 		Settings::updateSettings();
+		
+		if (!Settings::enabled)
+			return true;
 
 		auto ambient = AmbientColor::create(this);
 		m_fields->m_ambientChanger = ambient;

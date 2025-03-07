@@ -58,7 +58,7 @@
 			"description": "Select which method to use when getting/picking the colors.",
 			"one-of": ["Screen", "Background"]
 		},
-		"on-black:change-to-screen-picker": {
+		"change-to-screen-picker": {
 			"name": "Change picker when black",
 			"type": "bool",
 			"default": true,

@@ -73,7 +73,7 @@ public:
 			colorPicker = SCREEN;
 		}
 
-		changeMethodWhenBlack = Mod::get()->getSettingValue<bool>("on-black:change-to-screen-picker");
+		changeMethodWhenBlack = Mod::get()->getSettingValue<bool>("change-to-screen-picker");
 		updateTime = Mod::get()->getSettingValue<int64_t>("update-time");
 
 		renderPosition = CCPoint{
