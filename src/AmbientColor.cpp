@@ -1,39 +1,42 @@
 #include "AmbientColor.hpp"
 
+void AmbientColor::onChange(float dt) {
+	auto layer = m_layer.lock();
 
-void AmbientColor::onChange(CCObject* sender) {
-	m_isFinished = false;
-	
-	auto color = getScreenColor();
+	if (!layer) {
+		// this means the user most likely exited the level
+		return;
+	}
 
-	setIconColor(color, m_layer->m_player1);
-	setIconColor(color, m_layer->m_player2, true);
+	auto color = getScreenColor(layer);
+
+	setIconColor(color, layer->m_player1);
+	setIconColor(color, layer->m_player2, true);
 }
 
-ccColor3B AmbientColor::getRenderColor(CCSprite* bgSprite, Settings::ColorPicker picker) {
-	auto renderTexture = CCRenderTexture::create(1, 1);
+ccColor3B AmbientColor::getRenderColor(GJBaseGameLayer* layer, CCSprite* bgSprite, Settings::ColorPicker picker) {
+	m_renderTexture = CCRenderTexture::create(1, 1);
 
-	renderTexture->begin(); // Rendering block
+	m_renderTexture->begin(); // Rendering block
 
 	if (picker == Settings::ColorPicker::BG && bgSprite)
 		bgSprite->visit();
 	else
-		m_layer->visit();
+		layer->visit();
 
-	renderTexture->end(); // Rendering block
+	m_renderTexture->end(); // Rendering block
 
-	auto img = renderTexture->newCCImage();
+	auto img = m_renderTexture->newCCImage();
 	auto data = img->getData();
 	ccColor3B color = ccColor3B{data[0], data[1], data[2]};
-	
+
 	delete img;
-	renderTexture->removeMeAndCleanup();
 
 	return color;
 }
 
-CCSprite* AmbientColor::getPickSprite() {
-	auto parent = m_layer->getChildByIDRecursive("main-node");
+CCSprite* AmbientColor::getPickSprite(GJBaseGameLayer* layer) {
+	auto parent = layer->getChildByIDRecursive("main-node");
 	CCSprite* bgSprite = nullptr;
 
 	if (parent->getChildByID("background"))
@@ -45,47 +48,47 @@ CCSprite* AmbientColor::getPickSprite() {
 	return bgSprite;
 }
 
-ccColor3B AmbientColor::getScreenColor() {
-	m_pickPos = CCPoint(getRenderXPos(), getRenderYPos());
+ccColor3B AmbientColor::getScreenColor(GJBaseGameLayer* layer) {
+	m_pickPos = Settings::renderPosition;
 
 	auto size = CCDirector::sharedDirector()->getWinSize();
 
-	auto oldPos = m_layer->getPosition();
+	auto oldPos = layer->getPosition();
 
 	// For getting the exact position on the screen, we will move the layer itself, because of the RenderTexture capabilities
 	// For m_layer (which is the layer), we need negative numbers to move the layer off screen and get the exact position
-	m_layer->setPositionX(-size.width * m_pickPos.x);
-	m_layer->setPositionY(-size.height * m_pickPos.y);
+	layer->setPositionX(-size.width * m_pickPos.x);
+	layer->setPositionY(-size.height * m_pickPos.y);
 
-	if (Mod::get()->getSettingValue<bool>("draw-pos")) {
-		if (auto spr = m_layer->getChildByIDRecursive("render-pos-circle"_spr))
+	if (Settings::drawRenderPosition) {
+		if (auto spr = layer->getChildByIDRecursive("render-pos-circle"_spr))
 			spr->removeMeAndCleanup();
 
 		auto circleSpr = CCSprite::create("circle.png");
 		circleSpr->setPosition({static_cast<float>(size.width * m_pickPos.x), static_cast<float>(size.height * m_pickPos.y)});
 		circleSpr->setID("render-pos-circle"_spr);
 
-		m_layer->addChild(circleSpr);
+		layer->addChild(circleSpr);
 	}
 
 
-	auto pickSprite = getPickSprite();
-	ccColor3B color = getRenderColor(pickSprite, Settings::getPicker());
-	
-	if (Mod::get()->getSettingValue<bool>("debug-color"))
+	auto pickSprite = getPickSprite(layer);
+	ccColor3B color = getRenderColor(layer, pickSprite, Settings::colorPicker);
+
+	if (Settings::debugColor)
 		log::info("RGB: {} {} {}", color.r, color.g, color.b);
 
 	if (color == ccColor3B{0, 0, 0} && m_changeMethodWhenBlack) {
-		getRenderColor(pickSprite, Settings::ColorPicker::SCREEN);
+		getRenderColor(layer, pickSprite, Settings::ColorPicker::SCREEN);
 	}
-	m_layer->setPosition(oldPos);
+	layer->setPosition(oldPos);
 
 	return color;
 }
 
 void AmbientColor::setIconColor(ccColor3B color, PlayerObject* player, bool isP2) {
 	// TODO: Fix bad colors after dashing without having both colors enabled
-	switch (Settings::getPlayerPreference(isP2)) {
+	switch (isP2 ? Settings::player2Color : Settings::player1Color) {
 		case Settings::BOTH:
 			player->setColor(color);
 			player->setSecondColor(color);
@@ -98,7 +101,7 @@ void AmbientColor::setIconColor(ccColor3B color, PlayerObject* player, bool isP2
 			break;
 	}
 
-	switch (Settings::getExtra(isP2)) {
+	switch (isP2 ? Settings::player2Extra : Settings::player1Extra) {
 		case Settings::GLOW:
 			player->m_glowColor = color;
 			player->updateGlowColor();
