@@ -1,6 +1,6 @@
 # Ambient Icons Changelog
 
-## v2.0.2 - The [dank_meme](https://github.com/dankmeme01) update
+## v2.0.2-2.0.3 - The [dank_meme](https://github.com/dankmeme01) update
 
 - <cy>Improved</c> performance a lot - dank
 - <cy>Improved</c> codebase again - dank
