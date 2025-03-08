@@ -15,7 +15,9 @@ void AmbientColor::onChange(float dt) {
 }
 
 ccColor3B AmbientColor::getRenderColor(GJBaseGameLayer* layer, CCSprite* bgSprite, Settings::ColorPicker picker) {
-	m_renderTexture = CCRenderTexture::create(1, 1);
+	if (!m_renderTexture) {
+		m_renderTexture = CCRenderTexture::create(1, 1);
+	}
 
 	m_renderTexture->begin(); // Rendering block
 
