@@ -8,7 +8,7 @@ public:
 	enum PlayerColor {
 		MAIN,
 		SECONDARY,
-		BOTH
+		COLOR_BOTH
 	};
 
 	enum ColorPicker {
@@ -19,18 +19,31 @@ public:
 	enum Extra {
 		GLOW,
 		WAVE_TRAIL,
-		NONE
+		EXTRA_NONE
+	};
+
+	enum InvertColor {
+		INVERT_NONE,
+		P1,
+		P2,
+		INVERT_BOTH
 	};
 
 	static inline bool enabled;
-	static inline PlayerColor player1Color;
-	static inline PlayerColor player2Color;
-	static inline Extra player1Extra;
-	static inline Extra player2Extra;
+
+	static inline PlayerColor p1Color;
+	static inline PlayerColor p2Color;
+	static inline Extra p1Extra;
+	static inline Extra p2Extra;
+	static inline InvertColor invertColor;
+
 	static inline ColorPicker colorPicker;
 	static inline bool changeMethodWhenBlack;
+	
 	static inline int updateTime;
+	
 	static inline CCPoint renderPosition;
+	
 	static inline bool drawRenderPosition;
 	static inline bool debugColor;
 
@@ -44,7 +57,7 @@ public:
 			} else if (value == "Secondary") {
 				return SECONDARY;
 			} else if (value == "Both") {
-				return BOTH;
+				return COLOR_BOTH;
 			}
 
 			return MAIN; // shouldn't happen
@@ -53,7 +66,7 @@ public:
 		auto parseChangeExtra = [](const std::string& key) {
 			auto value = Mod::get()->getSettingValue<std::string>(key);
 			if (value == "None") {
-				return NONE;
+				return EXTRA_NONE;
 			} else if (value == "Wave Trail") {
 				return WAVE_TRAIL;
 			} else {
@@ -61,10 +74,24 @@ public:
 			}
 		};
 
-		player1Color = parseChangeColor("change-p1-color");
-		player2Color = parseChangeColor("change-p2-color");
-		player1Extra = parseChangeExtra("change-p1-extra");
-		player2Extra = parseChangeExtra("change-p2-extra");
+		auto parseInvertColor = [](const std::string& key) {
+			auto value = Mod::get()->getSettingValue<std::string>(key);
+			if (value == "None") {
+				return INVERT_NONE;
+			} else if (value == "P1") {
+				return P1;
+			} else if (value == "P2") {
+				return P2;
+			} else {
+				return INVERT_BOTH;
+			}
+		};
+
+		p1Color = parseChangeColor("change-p1-color");
+		p2Color = parseChangeColor("change-p2-color");
+		p1Extra = parseChangeExtra("change-p1-extra");
+		p2Extra = parseChangeExtra("change-p2-extra");
+		invertColor = parseInvertColor("invert-color");
 
 		auto colorp = Mod::get()->getSettingValue<std::string>("color-picker");
 		if (colorp == "Background") {

@@ -3,6 +3,7 @@
 #include <Geode/Geode.hpp>
 
 #include "Settings.hpp"
+#include "ColorWrapper.hpp"
 
 using namespace geode::prelude;
 
@@ -19,8 +20,6 @@ protected:
 		// this->m_player1 = layer->m_player1;
 		// this->m_player2 = layer->m_player2;
 
-		m_changeMethodWhenBlack = Settings::changeMethodWhenBlack;
-
 		return true;
 	}
 
@@ -33,9 +32,7 @@ private:
 	// PlayerObject* m_player1;
 	// PlayerObject* m_player2;
 
-	bool m_changeMethodWhenBlack;
-
-	ccColor3B getRenderColor(GJBaseGameLayer* layer, CCSprite* bgSprite, Settings::ColorPicker picker);
+	ColorWrapper getRenderColor(GJBaseGameLayer* layer, CCSprite* bgSprite, Settings::ColorPicker picker);
 	CCSprite* getPickSprite(GJBaseGameLayer* layer);
 
 public:
@@ -50,6 +47,6 @@ public:
 	}
 
 	void onChange(float dt);
-	ccColor3B getScreenColor(GJBaseGameLayer* layer);
-	void setIconColor(ccColor3B color, PlayerObject* player, bool isP2 = false);
+	ColorWrapper getScreenColor(GJBaseGameLayer* layer);
+	void setIconColor(ColorWrapper color, PlayerObject* player, bool isP2 = false);
 };
