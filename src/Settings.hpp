@@ -6,26 +6,26 @@ using namespace geode::prelude;
 class Settings {
 public:
 	enum PlayerColor {
-		MAIN,
-		SECONDARY,
+		COLOR_MAIN,
+		COLOR_SECONDARY,
 		COLOR_BOTH
 	};
 
 	enum ColorPicker {
-		BG,
-		SCREEN
+		PICKER_BG,
+		PICKER_SCREEN
 	};
 
 	enum Extra {
-		GLOW,
-		WAVE_TRAIL,
+		EXTRA_GLOW,
+		EXTRA_WAVE_TRAIL,
 		EXTRA_NONE
 	};
 
 	enum InvertColor {
 		INVERT_NONE,
-		P1,
-		P2,
+		INVERT_P1,
+		INVERT_P2,
 		INVERT_BOTH
 	};
 
@@ -53,14 +53,14 @@ public:
 		auto parseChangeColor = [](const std::string& key) {
 			auto value = Mod::get()->getSettingValue<std::string>(key);
 			if (value == "Main") {
-				return MAIN;
+				return COLOR_MAIN;
 			} else if (value == "Secondary") {
-				return SECONDARY;
+				return COLOR_SECONDARY;
 			} else if (value == "Both") {
 				return COLOR_BOTH;
 			}
 
-			return MAIN; // shouldn't happen
+			return COLOR_MAIN; // shouldn't happen
 		};
 
 		auto parseChangeExtra = [](const std::string& key) {
@@ -68,9 +68,9 @@ public:
 			if (value == "None") {
 				return EXTRA_NONE;
 			} else if (value == "Wave Trail") {
-				return WAVE_TRAIL;
+				return EXTRA_WAVE_TRAIL;
 			} else {
-				return GLOW;
+				return EXTRA_GLOW;
 			}
 		};
 
@@ -79,9 +79,9 @@ public:
 			if (value == "None") {
 				return INVERT_NONE;
 			} else if (value == "P1") {
-				return P1;
+				return INVERT_P1;
 			} else if (value == "P2") {
-				return P2;
+				return INVERT_P2;
 			} else {
 				return INVERT_BOTH;
 			}
@@ -95,9 +95,9 @@ public:
 
 		auto colorp = Mod::get()->getSettingValue<std::string>("color-picker");
 		if (colorp == "Background") {
-			colorPicker = BG;
+			colorPicker = PICKER_BG;
 		} else {
-			colorPicker = SCREEN;
+			colorPicker = PICKER_SCREEN;
 		}
 
 		changeMethodWhenBlack = Mod::get()->getSettingValue<bool>("change-to-screen-picker");
