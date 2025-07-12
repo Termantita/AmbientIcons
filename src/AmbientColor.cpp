@@ -89,8 +89,10 @@ ColorWrapper AmbientColor::getScreenColor(GJBaseGameLayer* layer) {
 	auto pickSprite = getPickSprite(layer);
 	ColorWrapper color = getRenderColor(layer, pickSprite, Settings::colorPicker);
 
-	if (Settings::debugColor)
-		log::info("RGB: {} {} {}", color.r, color.g, color.b);
+	if (Settings::debugColor) {
+		ColorWrapper invertedColor = color.invert();
+		log::info("Normal: ({} {} {}) | Inverted: ({} {} {})", color.r, color.g, color.b, invertedColor.r, invertedColor.g, invertedColor.b);
+	}
 
 	if (color == ColorWrapper(0, 0, 0) && Settings::changeMethodWhenBlack) {
 		color = getRenderColor(layer, pickSprite, Settings::ColorPicker::PICKER_SCREEN);
