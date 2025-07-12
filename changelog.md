@@ -1,5 +1,9 @@
 # Ambient Icons Changelog
 
+## v2.1.0 - The comeback update
+- <cy>Ported</c> to iOS
+- <cy>Added</c> invert colors feature
+
 ## v2.0.2-2.0.3 - The [dank_meme](https://github.com/dankmeme01) update
 
 - <cy>Improved</c> performance a lot - dank
