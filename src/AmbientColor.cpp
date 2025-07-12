@@ -23,9 +23,6 @@ void AmbientColor::onChange(float dt) {
 		p2Color = invertedColor;
 	}
 
-	log::info("Color: ({},{},{}), inverted color: ({}, {}, {})", color.r, color.g, color.b, 
-		invertedColor.r, invertedColor.g, invertedColor.b);
-
 	setIconColor(p1Color, layer->m_player1);
 	setIconColor(p2Color, layer->m_player2, true);
 }
