@@ -10,8 +10,24 @@ void AmbientColor::onChange(float dt) {
 
 	auto color = getScreenColor(layer);
 
-	setIconColor(color, layer->m_player1);
-	setIconColor(color, layer->m_player2, true);
+	auto p1Color = color;
+	auto p2Color = color;
+	auto invertedColor = color.invert();
+
+	if (Settings::invertColor == Settings::INVERT_BOTH) {
+		p1Color = invertedColor;
+		p2Color = invertedColor;
+	} else if (Settings::invertColor == Settings::INVERT_P1) {
+		p1Color = invertedColor;
+	} else if (Settings::invertColor == Settings::INVERT_P2) {
+		p2Color = invertedColor;
+	}
+
+	log::info("Color: ({},{},{}), inverted color: ({}, {}, {})", color.r, color.g, color.b, 
+		invertedColor.r, invertedColor.g, invertedColor.b);
+
+	setIconColor(p1Color, layer->m_player1);
+	setIconColor(p2Color, layer->m_player2, true);
 }
 
 ColorWrapper AmbientColor::getRenderColor(GJBaseGameLayer* layer, CCSprite* bgSprite, Settings::ColorPicker picker) {
@@ -21,7 +37,7 @@ ColorWrapper AmbientColor::getRenderColor(GJBaseGameLayer* layer, CCSprite* bgSp
 
 	m_renderTexture->begin(); // Rendering block
 
-	if (picker == Settings::BG && bgSprite)
+	if (picker == Settings::PICKER_BG && bgSprite)
 		bgSprite->visit();
 	else
 		layer->visit();
@@ -80,7 +96,7 @@ ColorWrapper AmbientColor::getScreenColor(GJBaseGameLayer* layer) {
 		log::info("RGB: {} {} {}", color.r, color.g, color.b);
 
 	if (color == ColorWrapper(0, 0, 0) && Settings::changeMethodWhenBlack) {
-		color = getRenderColor(layer, pickSprite, Settings::ColorPicker::SCREEN);
+		color = getRenderColor(layer, pickSprite, Settings::ColorPicker::PICKER_SCREEN);
 	}
 
 	layer->setPosition(oldPos);
@@ -88,31 +104,30 @@ ColorWrapper AmbientColor::getScreenColor(GJBaseGameLayer* layer) {
 	return color;
 }
 
+
+
 void AmbientColor::setIconColor(ColorWrapper color, PlayerObject* player, bool isP2) {
 	// TODO: Fix bad colors after dashing without having both colors enabled
 
-	// TODO: Invert logic
-
 	switch (isP2 ? Settings::p2Color : Settings::p1Color) {
-
 		case Settings::COLOR_BOTH:
 			player->setColor(color);
 			player->setSecondColor(color);
 			break;
-		case Settings::MAIN:
+		case Settings::COLOR_MAIN:
 			player->setColor(color);
 			break;
-		case Settings::SECONDARY:
+		case Settings::COLOR_SECONDARY:
 			player->setSecondColor(color);
 			break;
 	}
 
 	switch (isP2 ? Settings::p2Extra : Settings::p1Extra) {
-		case Settings::GLOW:
+		case Settings::EXTRA_GLOW:
 			player->m_glowColor = color;
 			player->updateGlowColor();
 			break;
-		case Settings::WAVE_TRAIL:
+		case Settings::EXTRA_WAVE_TRAIL:
 			if (player->m_isDart)
 				player->m_waveTrail->setColor(color);
 			break;
