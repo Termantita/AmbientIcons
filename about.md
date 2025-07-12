@@ -29,5 +29,5 @@ Color pickers:
 
 ## Upcoming
 
-- Invert Colors
+- ~~Invert Colors~~
 - Ambient Change (smooth fade between colors)

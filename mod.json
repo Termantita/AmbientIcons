@@ -1,5 +1,5 @@
 {
-	"geode": "4.2.0",
+	"geode": "4.6.3",
 	"gd": {
 		"win": "2.2074",
 		"android": "2.2074",
@@ -46,6 +46,12 @@
 			"default": "Wave Trail",
 			"one-of": ["None", "Wave Trail", "Glow + Wave Trail"],
 			"description": "You can't have just wave trail enabled, it will be overriden by the glow color option (blame robtop not me)."
+		},
+		"invert-color": {
+			"name": "Invert color",
+			"type": "string",
+			"default": "None",
+			"one-of": ["None", "P1", "P2", "Both"]
 		},
 		"picker-title": {
 			"name": "Picker settings",
