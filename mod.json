@@ -3,9 +3,10 @@
 	"gd": {
 		"win": "2.2074",
 		"android": "2.2074",
-		"mac": "2.2074"
+		"mac": "2.2074",
+		"ios": "2.2074"
 	},
-	"version": "2.0.3",
+	"version": "2.1.0",
 	"id": "terma.ambienticons",
 	"name": "Ambient Icons",
 	"developer": "Terma",
