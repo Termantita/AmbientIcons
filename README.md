@@ -1,5 +1,7 @@
 # AmbientIcons
 
+[![Mod Version](https://api.geode-sdk.org/v1/mods/terma.ambienticons/status_badge?stat=version)](https://geode-sdk.org/mods/terma.ambienticons) [![Geode Version](https://api.geode-sdk.org/v1/mods/terma.ambienticons/status_badge?stat=geode_version)](https://geode-sdk.org/install) [![GD Version](https://api.geode-sdk.org/v1/mods/terma.ambienticons/status_badge?stat=gd_version)](https://geometrydash.com/games) [![Downloads](https://api.geode-sdk.org/v1/mods/terma.ambienticons/status_badge?stat=downloads)](https://geode-sdk.org/mods/terma.ambienticons)
+
 Change the color of your icons based on the color of your screen or background.
 
 ## Platforms
